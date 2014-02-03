@@ -1,0 +1,21 @@
+{
+    "name": "nick-jones/Globby",
+
+    "authors": [{
+        "name": "Nicholas Jones"
+    }],
+
+    "require": {
+        "nikic/phlexy": "dev-master"
+    },
+
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "Globby": "lib/"
+        }
+    }
+}
