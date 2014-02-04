@@ -82,4 +82,4 @@ and [`test/integration/`](test/integration) directories respectively. These test
 PHPUnit is listed as a development dependency for this project; as such, you can simply run `./vendor/bin/phpunit`
 to execute the tests.
 
-A simple function test suite is also provided, refer to [`test/functional/`](test/function/) for further information.
+A simple function test suite is also provided, refer to [`test/functional/`](test/functional/) for further information.
