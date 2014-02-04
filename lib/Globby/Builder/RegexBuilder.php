@@ -70,7 +70,7 @@ class RegexBuilder implements Builder {
         switch ($identifier) {
             case Tokenizer::T_WORD:
                 // Remove now irrelevant escaping to allow us to apply preg_quote
-                $value = preg_replace('#\\\\([*\[\]?])#', '\\1', $value);
+                $value = preg_replace('#\\\\([*\[\]?\\\\])#', '\\1', $value);
                 return preg_quote($value, $this->delimiter);
 
             case Tokenizer::T_GROUP_BEGIN_NEGATED:

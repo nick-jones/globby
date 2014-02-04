@@ -24,8 +24,8 @@ class RegexBuilderTest extends \PHPUnit_Framework_TestCase {
                 'mock'
             ),
             array(
-                array(Tokenizer::T_WORD, 0, 'm\\ock*foo\[bar'),
-                'm\\\\ock\*foo\[bar'
+                array(Tokenizer::T_WORD, 0, 'm\\ock*foo\[bar.\\\\test'),
+                'm\\\\ock\*foo\[bar\.\\\\test'
             ),
             array(
                 array(Tokenizer::T_GROUP_BEGIN, 0, '['),
