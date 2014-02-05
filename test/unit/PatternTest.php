@@ -16,28 +16,12 @@ class PatternTest extends \PHPUnit_Framework_TestCase {
     protected $patternValue = 'foo*bar';
 
     /**
-     * @var array
+     * @var \PHPUnit_Framework_MockObject_MockObject|\Globby\Compiler\Compiler
      */
-    protected $patternTokens = array(
-        array(Tokenizer::T_WORD, 1, 'foo'),
-        array(Tokenizer::T_WILDCARD_MULTI, 1, '*'),
-        array(Tokenizer::T_WORD, 1, 'bar'),
-    );
-
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Globby\Tokenizer\Tokenizer
-     */
-    protected $tokenizer;
-
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Globby\Builder\Builder
-     */
-    protected $builder;
+    protected $compiler;
 
     protected function setUp() {
-        $this->patternValue = 'foo*bar';
-        $this->tokenizer = $this->getMock('\Globby\Tokenizer\Tokenizer');
-        $this->builder = $this->getMock('\Globby\Builder\Builder');
+        $this->compiler = $this->getMock('\Globby\Compiler\Compiler');
 
         $options = array(
             Pattern::OPTION_LAZY_COMPILE => TRUE
@@ -46,8 +30,7 @@ class PatternTest extends \PHPUnit_Framework_TestCase {
         $this->pattern = new Pattern(
             $this->patternValue,
             $options,
-            $this->tokenizer,
-            $this->builder
+            $this->compiler
         );
     }
 
@@ -55,37 +38,23 @@ class PatternTest extends \PHPUnit_Framework_TestCase {
      * Expecting Tokenizer and Builder calls on construction.
      */
     public function testConstruct_NonLazy() {
-        /** @var \PHPUnit_Framework_MockObject_MockObject|\Globby\Tokenizer\Tokenizer $tokenizer */
-        $tokenizer = $this->getMock('\Globby\Tokenizer\Tokenizer');
-
-        $tokenizer->expects($this->once())
-            ->method('parse')
-            ->will($this->returnValue(array()));
-
-        /** @var \PHPUnit_Framework_MockObject_MockObject|\Globby\Builder\Builder $builder */
-        $builder = $this->getMock('\Globby\Builder\Builder');
-
-        $builder->expects($this->once())
-            ->method('createFromTokens');
+        $this->compiler->expects($this->once())
+            ->method('compile')
+            ->will($this->returnValue('#^x$#u'));
 
         $options = array(
             Pattern::OPTION_LAZY_COMPILE => FALSE
         );
 
-        new Pattern('x', $options, $tokenizer, $builder);
+        new Pattern('x', $options, $this->compiler);
     }
 
     public function testGetRegex() {
         $expected = '#foo.*bar#u';
 
-        $this->tokenizer->expects($this->once())
-            ->method('parse')
+        $this->compiler->expects($this->once())
+            ->method('compile')
             ->with($this->patternValue)
-            ->will($this->returnValue($this->patternTokens));
-
-        $this->builder->expects($this->once())
-            ->method('createFromTokens')
-            ->with($this->patternTokens)
             ->will($this->returnValue($expected));
 
         $this->assertEquals($expected, $this->pattern->getRegex());
@@ -97,16 +66,12 @@ class PatternTest extends \PHPUnit_Framework_TestCase {
     public function testMatch() {
         $regex = '#^foo.*bar$#u';
 
-        $this->tokenizer->expects($this->once())
-            ->method('parse')
-            ->will($this->returnValue($this->patternTokens));
-
-        $this->builder->expects($this->once())
-            ->method('createFromTokens')
+        $this->compiler->expects($this->once())
+            ->method('compile')
+            ->with($this->patternValue)
             ->will($this->returnValue($regex));
 
         $this->assertTrue($this->pattern->match('foo-bar'));
-        // Ensure the anchors are in place
         $this->assertFalse($this->pattern->match('-foo-bar'));
         $this->assertFalse($this->pattern->match('foo-bar-'));
     }

@@ -2,12 +2,12 @@
 
 namespace Globby;
 
+use Globby\Compiler\Compiler;
+use Globby\Compiler\GlobbyCompiler;
 use Phlexy\LexerDataGenerator;
 use Phlexy\LexerFactory\Stateful\UsingCompiledRegex;
-use Globby\Builder\Builder;
 use Globby\Builder\RegexBuilder;
 use Globby\Tokenizer\GlobTokenizer;
-use Globby\Tokenizer\Tokenizer;
 
 /**
  * This class provides a means to match a glob-style pattern against values, and also retrieve a regex equivalent for
@@ -46,51 +46,41 @@ class Pattern {
     );
 
     /**
-     * Object implementing the Tokenizer interface to perform the tokenize step.
+     * Object implementing the Compiler interface to perform the compile step.
      *
-     * @var Tokenizer
+     * @var Compiler
      */
-    protected $tokenizer;
+    protected $compiler;
 
     /**
-     * Object implementing the Builder interface to perform the regex building step.
-     *
-     * @var Builder
-     */
-    protected $builder;
-
-    /**
-     * Construction of a new Pattern object. The $tokenizer and $builder arguments afford easy dependency injection;
-     * typically you will not need to pass anything for these values.
+     * Construction of a new Pattern object. The $compiler argument afford easy dependency injection; typically you
+     * will not need to pass anything for this value.
      *
      * @param string $pattern The glob-style pattern to be represented
-     * @param array $options
-     * @param Tokenizer $tokenizer
-     * @param Builder $builder
+     * @param array $options A map of OPTION_* constants => value
+     * @param Compiler $compiler Compiler instance. If one is not supplied, an instance of GlobbyCompiler will be used
      */
-    public function __construct($pattern, array $options = array(),
-                                Tokenizer $tokenizer = NULL, Builder $builder = NULL) {
-
+    public function __construct($pattern, array $options = array(), Compiler $compiler = NULL) {
         $this->pattern = $pattern;
         $this->options = $options + $this->options;
-        $this->tokenizer = $tokenizer ?: $this->defaultTokenizer();
-        $this->builder = $builder ?: $this->defaultBuilder();
+        $this->compiler = $compiler ?: $this->defaultCompiler();
 
         if (!$this->options[self::OPTION_LAZY_COMPILE]) {
-            $this->compile();
+            $this->regex = $this->compile();
         }
     }
 
     /**
      * Compile step. This utilises the Tokenizer and Builder instances to produce a regular expression from the
      * internal pattern value.
+     *
+     * @return string A regular expression constructed from the pattern held by this instance
      */
     protected function compile() {
-        $tokens = $this->tokenizer
-            ->parse($this->pattern);
+         $regex = $this->compiler
+            ->compile($this->pattern);
 
-        $this->regex = $this->builder
-            ->createFromTokens($tokens);
+         return $regex;
     }
 
     /**
@@ -111,7 +101,7 @@ class Pattern {
     /**
      * Accessor for the 'pattern' property.
      *
-     * @return string
+     * @return string The pattern value originally supplied to this instance
      */
     public function getPattern() {
         return $this->pattern;
@@ -120,14 +110,24 @@ class Pattern {
     /**
      * Accessor for the 'regex' property. If it is uninitialised, the compile step is kicked-off.
      *
-     * @return string
+     * @return string A regular expression equivalent of the pattern value held by this instance
      */
     public function getRegex() {
         if (!$this->regex) {
-            $this->compile();
+            $this->regex = $this->compile();
         }
 
         return $this->regex;
+    }
+
+    /**
+     * @return GlobbyCompiler
+     */
+    protected function defaultCompiler() {
+        $tokenizer = $this->defaultTokenizer();
+        $builder = $this->defaultBuilder();
+
+        return new GlobbyCompiler($tokenizer, $builder);
     }
 
     /**
