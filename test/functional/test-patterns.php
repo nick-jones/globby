@@ -4,8 +4,8 @@ error_reporting(E_ALL);
 
 /**
  * Define the "wildcard_match" function, if undefined. This provides a mechanism for people to test their own
- * implementation of glob-style wildcard matching, if they so wish. To do so, simply define "wildcard_match" before
- * including this file, and then call suite() with a path to the appropriate file.
+ * implementation of glob-style wildcard matching, if they so wish. Refer to the README file for instructions
+ * on how to do so.
  */
 if (!function_exists('wildcard_match')) {
     require_once __DIR__ . '/../../vendor/autoload.php';
