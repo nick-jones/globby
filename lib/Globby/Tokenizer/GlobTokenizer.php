@@ -117,7 +117,7 @@ class GlobTokenizer implements Tokenizer {
              * must be checked at this level. To achieve this we lookahead for the character, and ensure it's
              * captured by adding a capturing group inside (regex lookarounds do not capture).
              */
-            '\[(!?)(?=(\]))?' => function(Stateful $lexer, $matches) {
+            '\[(!?)(?=(\])?)' => function(Stateful $lexer, $matches) {
                 // Determine the state to enter (depending on whether the lookahead succeeded, i.e. "]" is the first
                 // character of the grouping)
                 $state = isset($matches[2])
