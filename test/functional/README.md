@@ -32,4 +32,4 @@ Brief descriptions of the bundled pattern tests:
 * [`patterns_general.json`](patterns_general.json) - this contains hand-written test patterns of varying degrees of
 complexity
 * [`patterns_glob_man_page.json`](patterns_glob_man_page.json) - this contains various complex pattern examples as
-presented in the glob(7) man page
+presented in the [(glob(7) man page](http://man7.org/linux/man-pages/man7/glob.7.html)
