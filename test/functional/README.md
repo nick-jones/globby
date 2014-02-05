@@ -12,14 +12,15 @@ with a non-zero status on failure.
 
 The supplied file should contain JSON, and be structured as follows:
 
-`
+```
 {
     "$pattern": [
         ["$positive_value", "$positive_value_2", ...],
         ["$negative_value", "$negative_value_2", ...]
-    ]
+    ],
+    ...
 }
-`
+```
 
 The `$pattern` value should contain the glob wildcard pattern to be verified. The positive array should contain values
 that are expected to match that pattern. The negative array should contain values that do not.
@@ -28,5 +29,7 @@ that are expected to match that pattern. The negative array should contain value
 
 Brief descriptions of the bundled pattern tests:
 
-* `patterns_general.json` - this contains hand-written test patterns of varying degrees of complexity
-* `patterns_glob_man_page.json` - this contains various complex pattern examples as presented in the glob(7) man page
+* [`patterns_general.json`](patterns_general.json) - this contains hand-written test patterns of varying degrees of
+complexity
+* [`patterns_glob_man_page.json`](patterns_glob_man_page.json) - this contains various complex pattern examples as
+presented in the glob(7) man page

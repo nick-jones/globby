@@ -2,12 +2,13 @@
 
 Globby is a PHP wildcard library, providing glob wildcard pattern matching functionality.
 
-Before you endeavour on using this, do note that this is more than likely *not* what you want. Glob wildcard patterns
+Before you endeavour on using this, do note that this is probably *not* what you want. Glob wildcard patterns
 are extremely close to regex patterns; as such, if you wish to use pattern matching in your application, you are far
 better off using [`preg_match()`](http://php.net/preg_match). Also note that if you wish to pattern match file paths,
-then do of course use [`glob()`](http://php.net/glob) and/or [`fnmatch()`](http://php.net/fnmatch)!
+then do of course use [`glob()`](http://php.net/glob), [`GlobIterator`](http://php.net/globiterator), or
+[`fnmatch()`](http://php.net/fnmatch).
 
-If you do have one of the very limited set of use-cases this library can cater for, then please continue reading..
+If you do have one of the limited set of use-cases this library can cater for, then please continue reading..
 
 ## About
 
@@ -82,4 +83,5 @@ and [`test/integration/`](test/integration) directories respectively. These test
 PHPUnit is listed as a development dependency for this project; as such, you can simply run `./vendor/bin/phpunit`
 to execute the tests.
 
-A simple function test suite is also provided, refer to [`test/functional/`](test/functional/) for further information.
+A simple functional test suite is also provided, refer to [`test/functional/`](test/functional/) for further
+information.
