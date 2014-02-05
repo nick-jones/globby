@@ -24,8 +24,8 @@ class GlobbyCompilerIntegrationTest extends \PHPUnit_Framework_TestCase {
 
         $compiler = new GlobbyCompiler($tokenizer, $builder);
 
-        $pattern = 'foo*bar.ba[zr]?[!1[:alpha:]4-59]';
-        $expected = '#^foo.*bar\.ba[zr].[^1[:alpha:]4-59]$#u';
+        $pattern = 'foo*bar.ba[zr]?[!1[:alpha:]4-59][^x]';
+        $expected = '#^foo.*bar\.ba[zr].[^1[:alpha:]4-59][^x]$#u';
 
         $result = $compiler->compile($pattern);
 

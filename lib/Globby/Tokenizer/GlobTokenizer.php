@@ -110,14 +110,14 @@ class GlobTokenizer implements Tokenizer {
             // Simple match of "?"
             '\?' => self::T_WILDCARD_SINGLE,
             /*
-             * Matches against [. This also optionally matches "!" as the first character to provide negation context.
-             * The positive lookahead provides a means to check for "]" as the first character. This is a slightly
-             * nasty hack to deal with a rule that "]" can be permitted as a standard character in a character grouping,
-             * so long as it's the first character. Once we move into the IN_GROUP state we have no such context, so it
-             * must be checked at this level. To achieve this we lookahead for the character, and ensure it's
-             * captured by adding a capturing group inside (regex lookarounds do not capture).
+             * Matches against [. This also optionally matches "!" or "^" as the first character to provide negation
+             * context. The positive lookahead provides a means to check for "]" as the first character. This is a
+             * slightly nasty hack to deal with a rule that "]" can be permitted as a standard character in a character,
+             * grouping so long as it's the first character. Once we move into the IN_GROUP state we have no such
+             * context, so it must be checked at this level. To achieve this we lookahead for the character, and ensure
+             * it's captured by adding a capturing group inside (regex lookarounds do not capture).
              */
-            '\[(!?)(?=(\])?)' => function(Stateful $lexer, $matches) {
+            '\[([!^]?)(?=(\])?)' => function(Stateful $lexer, $matches) {
                 // Determine the state to enter (depending on whether the lookahead succeeded, i.e. "]" is the first
                 // character of the grouping)
                 $state = isset($matches[2])
@@ -127,7 +127,7 @@ class GlobTokenizer implements Tokenizer {
                 $lexer->pushState($state);
 
                 // Negated grouping if the first character is "!"
-                return $matches[1] == '!'
+                return $matches[1] !== ''
                     ? self::T_GROUP_BEGIN_NEGATED
                     : self::T_GROUP_BEGIN;
             }

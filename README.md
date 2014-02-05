@@ -18,7 +18,7 @@ provided patterns into regular expressions. The following features are supported
 * Multi-character wildcard (`*`)
 * Single-character wildcard (`?`)
 * Character groups/classes (`[abc]`)
-* Negated character groups/classes (`[!abc]`)
+* Negated character groups/classes (`[!abc]`, `[^abc]`)
 * Character ranges (`a-z`, `0-9`, etc)
 * POSIX character classes (`[:alpha:]`, `[:digit:]`, etc)
 * Escape character (`\`)

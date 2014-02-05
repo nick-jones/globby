@@ -55,6 +55,14 @@ class GlobTokenizerIntegrationTest extends \PHPUnit_Framework_TestCase {
                 )
             ),
             array(
+                '[^a]',
+                array(
+                    array(Tokenizer::T_GROUP_BEGIN_NEGATED, 1, '[^'),
+                    array(Tokenizer::T_GROUP_CHARACTER, 1, 'a'),
+                    array(Tokenizer::T_GROUP_END, 1, ']')
+                )
+            ),
+            array(
                 '[ab]',
                 array(
                     array(Tokenizer::T_GROUP_BEGIN, 1, '['),
