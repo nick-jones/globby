@@ -1,6 +1,10 @@
 {
     "name": "nick-jones/globby",
 
+    "description": "Wildcard library, providing glob wildcard pattern matching",
+
+    "keywords": ["glob", "wildcard", "pattern"],
+
     "authors": [{
         "name": "Nicholas Jones"
     }],
