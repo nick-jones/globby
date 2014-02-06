@@ -5,6 +5,8 @@
         "name": "Nicholas Jones"
     }],
 
+    "license": "MIT",
+
     "require": {
         "php": ">=5.3",
         "nikic/phlexy": "dev-master"
