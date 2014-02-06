@@ -1,6 +1,6 @@
 # Globby
 
-Globby is a PHP wildcard library, providing glob wildcard pattern matching functionality.
+Globby is a glob wildcard → regular expression translation library.
 
 Before you endeavour on using this, do note that this is probably *not* what you want. Glob wildcard patterns
 are extremely close to regex patterns; as such, if you wish to use pattern matching in your application, you are far
@@ -12,8 +12,7 @@ If you do have one of the limited set of use-cases this library can cater for, t
 
 ## About
 
-Globby provides almost feature-complete glob wildcard matching functionality. It achieves this by translating the
-provided patterns into regular expressions. The following features are supported:
+Globby is able to compile glob wildcard patterns into regular expressions. The following features are supported:
 
 * Multi-character wildcard (`*`)
 * Single-character wildcard (`?`)
@@ -75,21 +74,22 @@ Or lower `minimum-stability`, but `prefer-stable`:
 
 ## Usage
 
-Simply create an instance of `\Globby\Pattern`, supplying the pattern in the constructor. The `match($value)` method
-indicates whether or not the supplied value matches the pattern. An example:
-
-```php
-$pattern = new \Globby\Pattern('wow\[such\]?pat\*ter[nr][!,]!*wild[[:digit:]]');
-var_dump($pattern->match('wow[such]:pat*tern.!much.wild9'));
-// result: bool(true)
-```
-
-The `Pattern` interface also provides a means to fetch the regular expression, `toRegex()`. An example:
+Simply create an instance of `\Globby\Pattern`, supplying the pattern in the constructor. The `toRegex()` method
+will give you the regular expression equivalent of the pattern. An example:
 
 ```php
 $pattern = new \Globby\Pattern('wow\[such\]?pat\*ter[nr][!,]!*wild[[:digit:]]');
 var_dump($pattern->toRegex());
 // result: string(48) "#^wow\[such\].pat\*ter[nr][^,]\!.*wild[[:digit:]]$#u"
+```
+
+For your convenience, the interface also provides a `match($value)` method that plugs the regular expression straight
+into preg_match, indicating whether or not the supplied value matches the pattern. An example:
+
+```php
+$pattern = new \Globby\Pattern('wow\[such\]?pat\*ter[nr][!,]!*wild[[:digit:]]');
+var_dump($pattern->match('wow[such]:pat*tern.!much.wild9'));
+// result: bool(true)
 ```
 
 If the supplied pattern is invalid, you are likely to encounter a `TokenizeException`. This can happen, for example, if

@@ -1,9 +1,9 @@
 {
     "name": "nick-jones/globby",
 
-    "description": "Wildcard library, providing glob wildcard pattern matching",
+    "description": "Glob wildcard → regular expression translation library",
 
-    "keywords": ["glob", "wildcard", "pattern"],
+    "keywords": ["glob", "wildcard", "pattern", "match"],
 
     "authors": [{
         "name": "Nicholas Jones"
