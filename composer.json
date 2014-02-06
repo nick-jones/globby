@@ -9,7 +9,7 @@
 
     "require": {
         "php": ">=5.3",
-        "nikic/phlexy": "dev-master"
+        "nikic/phlexy": "~1.0@dev"
     },
 
     "require-dev": {
