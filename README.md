@@ -44,8 +44,13 @@ step on every relevant request (this is assuming the patterns are reasonably fix
 
 ## Installation
 
-To pull down dependencies and check version compatibility you will need to run [composer](http://getcomposer.org) in
-the project root.
+You can install Globby via [composer](http://getcomposer.org). Add the following to your composer.json file:
+
+```
+"require": {
+    "nick-jones/globby": "~0.2"
+}
+```
 
 ## Usage
 
