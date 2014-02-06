@@ -71,8 +71,7 @@ class Pattern {
     }
 
     /**
-     * Compile step. This utilises the Tokenizer and Builder instances to produce a regular expression from the
-     * internal pattern value.
+     * Compile step. This utilises the internal Compiler instance to translate the pattern to a regular expression.
      *
      * @return string A regular expression constructed from the pattern held by this instance
      */
