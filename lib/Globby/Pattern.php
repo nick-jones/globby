@@ -17,7 +17,7 @@ use Globby\Tokenizer\GlobTokenizer;
  */
 class Pattern {
     /**
-     * This option forces the compile stage to only occur when necessary (i.e. on getRegex(), and not in the
+     * This option forces the compile stage to only occur when necessary (i.e. on toRegex()/match(), and not in the
      * class constructor.)
      */
     const OPTION_LAZY_COMPILE = 'lazy_compile';
@@ -32,7 +32,7 @@ class Pattern {
 
     /**
      * The "compiled" regex value. This is cached to avoid repeating the intensive tokenize & building steps on
-     * repeated calls to match()/getRegex().
+     * repeated calls to match()/toRegex().
      *
      * @var string
      */
@@ -90,7 +90,7 @@ class Pattern {
      */
     public function match($value) {
         $result = preg_match(
-            $this->getRegex(),
+            $this->toRegex(),
             $value
         );
 
@@ -107,11 +107,12 @@ class Pattern {
     }
 
     /**
-     * Accessor for the 'regex' property. If it is uninitialised, the compile step is kicked-off.
+     * Convert the pattern into a regular expression, and return the result. If this has been done previously, a
+     * cached copy is returned.
      *
      * @return string A regular expression equivalent of the pattern value held by this instance
      */
-    public function getRegex() {
+    public function toRegex() {
         if (!$this->regex) {
             $this->regex = $this->compile();
         }

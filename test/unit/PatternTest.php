@@ -49,7 +49,7 @@ class PatternTest extends \PHPUnit_Framework_TestCase {
         new Pattern('x', $options, $this->compiler);
     }
 
-    public function testGetRegex() {
+    public function testToRegex() {
         $expected = '#foo.*bar#u';
 
         $this->compiler->expects($this->once())
@@ -57,10 +57,10 @@ class PatternTest extends \PHPUnit_Framework_TestCase {
             ->with($this->patternValue)
             ->will($this->returnValue($expected));
 
-        $this->assertEquals($expected, $this->pattern->getRegex());
+        $this->assertEquals($expected, $this->pattern->toRegex());
 
         // Repeated call should not trigger another compile; the invocation counts enforce this assertion
-        $this->assertEquals($expected, $this->pattern->getRegex());
+        $this->assertEquals($expected, $this->pattern->toRegex());
     }
 
     public function testMatch() {

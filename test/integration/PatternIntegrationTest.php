@@ -28,11 +28,11 @@ class PatternIntegrationTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse($pattern->match('foo.bar.baz'));
     }
 
-    public function testGetRegex() {
+    public function testToRegex() {
         $expected = '#^foo.*bar\.ba[zr].[^1[:alpha:]4-59][^x]$#u';
 
         $pattern = new Pattern('foo*bar.ba[zr]?[!1[:alpha:]4-59][^x]');
-        $regex = $pattern->getRegex();
+        $regex = $pattern->toRegex();
 
         $this->assertEquals($expected, $regex);
     }

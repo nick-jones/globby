@@ -84,11 +84,11 @@ var_dump($pattern->match('wow[such]:pat*tern.!much.wild9'));
 // result: bool(true)
 ```
 
-The `Pattern` interface also provides a means to fetch the regular expression, `getRegex()`. An example:
+The `Pattern` interface also provides a means to fetch the regular expression, `toRegex()`. An example:
 
 ```php
 $pattern = new \Globby\Pattern('wow\[such\]?pat\*ter[nr][!,]!*wild[[:digit:]]');
-var_dump($pattern->getRegex());
+var_dump($pattern->toRegex());
 // result: string(48) "#^wow\[such\].pat\*ter[nr][^,]\!.*wild[[:digit:]]$#u"
 ```
 
