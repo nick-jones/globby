@@ -52,20 +52,24 @@ Globby without issue:
 Explicitly require Phlexy with dev stability:
 
 ```json
-"require": {
-    "nick-jones/globby": "~0.2",
-    "nikic/phlexy": "@dev"
+{
+    "require": {
+        "nick-jones/globby": "~0.2",
+        "nikic/phlexy": "@dev"
+    }
 }
 ```
 
 Or lower `minimum-stability`, but `prefer-stable`:
 
 ```json
-"minimum-stability": "dev",
-"prefer-stable": true,
+{
+    "minimum-stability": "dev",
+    "prefer-stable": true,
 
-"require": {
-    "nick-jones/globby": "~0.2"
+    "require": {
+        "nick-jones/globby": "~0.2"
+    }
 }
 ```
 
