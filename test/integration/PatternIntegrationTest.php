@@ -36,4 +36,13 @@ class PatternIntegrationTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals($expected, $regex);
     }
+
+    public function testToRegex_CaseInsensitive() {
+        $expected = '#^foo.*bar$#ui';
+
+        $pattern = new Pattern('foo*bar', array(Pattern::OPTION_CASE_INSENSITIVE => TRUE));
+        $regex = $pattern->toRegex();
+
+        $this->assertEquals($expected, $regex);
+    }
 }

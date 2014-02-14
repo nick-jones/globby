@@ -23,6 +23,11 @@ class Pattern {
     const OPTION_LAZY_COMPILE = 'lazy_compile';
 
     /**
+     * This option will result in the compiled regex containing the 'i' regex modifier.
+     */
+    const OPTION_CASE_INSENSITIVE = 'case_insensitive';
+
+    /**
      * Pattern value. Given the "compiled" regex is cached, this value should not be changed; at least, not without
      * clearing the regex value first.
      *
@@ -42,7 +47,8 @@ class Pattern {
      * @var array
      */
     protected $options = array(
-        self::OPTION_LAZY_COMPILE => FALSE
+        self::OPTION_LAZY_COMPILE => FALSE,
+        self::OPTION_CASE_INSENSITIVE => FALSE
     );
 
     /**
@@ -145,6 +151,9 @@ class Pattern {
      * @return RegexBuilder
      */
     protected function defaultBuilder() {
-        return new RegexBuilder();
+        $modifiers = RegexBuilder::DEFAULT_MODIFIERS
+            . ($this->options[self::OPTION_CASE_INSENSITIVE] ? 'i' : '');
+
+        return new RegexBuilder($modifiers);
     }
 }
