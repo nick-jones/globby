@@ -14,7 +14,7 @@ class RegexBuilderTest extends \PHPUnit_Framework_TestCase {
     protected $builder;
 
     protected function setUp() {
-        $this->builder = new RegexBuilder('#');
+        $this->builder = new RegexBuilder('u', '#');
     }
 
     public function tokenDataProvider() {

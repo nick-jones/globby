@@ -13,11 +13,9 @@ use Globby\Tokenizer\Tokenizer;
  */
 class RegexBuilder implements Builder {
     /**
-     * Regex delimiter. This must be escaped in various values.
-     *
-     * @var string
+     * Default modifiers to be added to the constructed regular expression.
      */
-    protected $delimiter;
+    const DEFAULT_MODIFIERS = 'u';
 
     /**
      * Regex modifiers.
@@ -27,12 +25,19 @@ class RegexBuilder implements Builder {
     protected $modifiers;
 
     /**
-     * @param string $delimiter
-     * @param string $modifiers
+     * Regex delimiter. This must be escaped in various values.
+     *
+     * @var string
      */
-    public function __construct($delimiter = '#', $modifiers = 'u') {
-        $this->delimiter = $delimiter;
+    protected $delimiter;
+
+    /**
+     * @param string $modifiers
+     * @param string $delimiter
+     */
+    public function __construct($modifiers = self::DEFAULT_MODIFIERS, $delimiter = '#') {
         $this->modifiers = $modifiers;
+        $this->delimiter = $delimiter;
     }
 
     /**
