@@ -165,6 +165,11 @@ class GlobTokenizer implements Tokenizer {
      */
     protected function createInGroupSpecialFirstDefinition() {
         return array(
+            // Handles cases where the range start character is a "]".
+            '\]-[^\]]' => function(Stateful $lexer) {
+                $lexer->swapState('IN_GROUP');
+                return self::T_GROUP_RANGE;
+            },
             // Consumes the single character as a T_GROUP_CHARACTER, and swaps back into the normal IN_GROUP state
             '\]' => function(Stateful $lexer) {
                 $lexer->swapState('IN_GROUP');

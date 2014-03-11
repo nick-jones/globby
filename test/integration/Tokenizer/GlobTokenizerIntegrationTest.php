@@ -88,6 +88,14 @@ class GlobTokenizerIntegrationTest extends \PHPUnit_Framework_TestCase {
                 )
             ),
             array(
+                '[]-_]',
+                array(
+                    array(Tokenizer::T_GROUP_BEGIN, 1, '['),
+                    array(Tokenizer::T_GROUP_RANGE, 1, ']-_'),
+                    array(Tokenizer::T_GROUP_END, 1, ']')
+                )
+            ),
+            array(
                 '[][!]',
                 array(
                     array(Tokenizer::T_GROUP_BEGIN, 1, '['),
