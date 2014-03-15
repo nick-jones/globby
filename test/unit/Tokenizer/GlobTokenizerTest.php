@@ -12,7 +12,7 @@ class GlobTokenizerTest extends \PHPUnit_Framework_TestCase {
     protected $tokenizer;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Phlexy\LexerFactory
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $lexerFactory;
 
