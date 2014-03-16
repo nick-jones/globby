@@ -32,6 +32,31 @@ class RegexBuilder implements Builder {
     protected $delimiter;
 
     /**
+     * Wildcard token -> regex value mapping.
+     *
+     * @var array
+     */
+    protected static $tokenValueMap = array(
+        Tokenizer::T_WILDCARD_MULTI => '.*',
+        Tokenizer::T_WILDCARD_SINGLE => '.',
+        Tokenizer::T_GROUP_BEGIN => '[',
+        Tokenizer::T_GROUP_BEGIN_NEGATED => '[^',
+        Tokenizer::T_GROUP_END => ']'
+    );
+
+    /**
+     * Wildcard token -> internal value translation callback mapping.
+     *
+     * @var array
+     */
+    protected static $tokenCallbackMap = array(
+        Tokenizer::T_WORD => 'translateWordToken',
+        Tokenizer::T_GROUP_CHARACTER => 'translateGroupCharacterToken',
+        Tokenizer::T_GROUP_RANGE => 'translateGroupRangeToken',
+        Tokenizer::T_GROUP_CHARACTER_CLASS => 'translateGroupCharacterClassToken'
+    );
+
+    /**
      * @param string $modifiers
      * @param string $delimiter
      */
@@ -71,38 +96,85 @@ class RegexBuilder implements Builder {
     protected function translateToken(array $token) {
         $identifier = is_string($token[0]) ? NULL : $token[0];
         $value = $token[2];
+        $result = null;
 
-        switch ($identifier) {
-            case Tokenizer::T_WORD:
-                // Remove now irrelevant escaping to allow us to apply preg_quote
-                $value = preg_replace('#\\\\([*\[\]?\\\\])#', '\\1', $value);
-                return preg_quote($value, $this->delimiter);
-
-            case Tokenizer::T_GROUP_BEGIN_NEGATED:
-                return '[^';
-
-            case Tokenizer::T_WILDCARD_MULTI:
-                return '.*';
-
-            case Tokenizer::T_WILDCARD_SINGLE:
-                return '.';
-
-            case Tokenizer::T_GROUP_CHARACTER:
-                return preg_quote($value, $this->delimiter);
-
-            case Tokenizer::T_GROUP_RANGE:
-                // The entire value cannot be escaped, as the range symbol (-) is escaped by preg_quote
-                $min = preg_quote($value[0], $this->delimiter);
-                $max = preg_quote($value[2], $this->delimiter);
-                return $min . '-' . $max;
-
-            case Tokenizer::T_GROUP_BEGIN:
-            case Tokenizer::T_GROUP_END:
-            case Tokenizer::T_GROUP_CHARACTER_CLASS:
-                // All of the above are represented by the same characters in glob-style and regex patterns.
-                return $value;
+        if (array_key_exists($identifier, self::$tokenValueMap)) {
+            $result = $this->translateTokenUsingMap($identifier);
+        }
+        else if (array_key_exists($identifier, self::$tokenCallbackMap)) {
+            $result = $this->translateTokenUsingCallback($identifier, $value);
         }
 
-        throw new BuildException(sprintf('No available translation for "%s"', $value));
+        if ($result === NULL) {
+            throw new BuildException(sprintf('No available translation for "%s"', $value));
+        }
+
+        return $result;
+    }
+
+    /**
+     * Uses the simple token -> value mapping array.
+     *
+     * @param int $identifier
+     * @return string
+     */
+    protected function translateTokenUsingMap($identifier) {
+        return self::$tokenValueMap[$identifier];
+    }
+
+    /**
+     * Calls an internal method to retrieve an appropriate value for use within the regex.
+     *
+     * @param int $identifier
+     * @param string $value
+     * @return string
+     */
+    protected function translateTokenUsingCallback($identifier, $value) {
+        $method = self::$tokenCallbackMap[$identifier];
+
+        return call_user_func(
+            array($this, $method),
+            $value
+        );
+    }
+
+    /**
+     * @param string $value
+     * @return string
+     */
+    protected function translateWordToken($value) {
+        // Remove now irrelevant escaping to allow us to apply preg_quote
+        $value = preg_replace('#\\\\([*\[\]?\\\\])#', '\\1', $value);
+
+        return preg_quote($value, $this->delimiter);
+    }
+
+    /**
+     * @param string $value
+     * @return string
+     */
+    protected function translateGroupRangeToken($value) {
+        // The entire value cannot be escaped, as the range symbol (-) is escaped by preg_quote
+        $min = preg_quote($value[0], $this->delimiter);
+        $max = preg_quote($value[2], $this->delimiter);
+
+        return $min . '-' . $max;
+    }
+
+    /**
+     * @param string $value
+     * @return string
+     */
+    protected function translateGroupCharacterToken($value) {
+        return preg_quote($value, $this->delimiter);
+    }
+
+    /**
+     * @param string $value
+     * @return string
+     */
+    protected function translateGroupCharacterClassToken($value) {
+        // The value should be verified, implementation to be added.
+        return $value;
     }
 }
