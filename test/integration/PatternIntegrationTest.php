@@ -28,19 +28,31 @@ class PatternIntegrationTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse($pattern->match('foo.bar.baz'));
     }
 
-    public function testToRegex() {
-        $expected = '#^foo.*bar\.ba[zr].[^1[:alpha:]4-59][^x]$#u';
-
-        $pattern = new Pattern('foo*bar.ba[zr]?[!1[:alpha:]4-59][^x]');
-        $regex = $pattern->toRegex();
-
-        $this->assertEquals($expected, $regex);
+    /**
+     * @return array
+     */
+    public function regexDataProvider() {
+        return array(
+            array(
+                'foo*bar.ba[zr]?[!1[:alpha:]4-59][^x]',
+                '#^foo.*bar\.ba[zr].[^1[:alpha:]4-59][^x]$#u',
+            ),
+            array(
+                'foo*bar',
+                '#^foo.*bar$#ui',
+                array(Pattern::OPTION_CASE_INSENSITIVE => TRUE)
+            )
+        );
     }
 
-    public function testToRegex_CaseInsensitive() {
-        $expected = '#^foo.*bar$#ui';
-
-        $pattern = new Pattern('foo*bar', array(Pattern::OPTION_CASE_INSENSITIVE => TRUE));
+    /**
+     * @param string $pattern
+     * @param string $expected
+     * @param array $options
+     * @dataProvider regexDataProvider
+     */
+    public function testToRegex($pattern, $expected, array $options = array()) {
+        $pattern = new Pattern($pattern, $options);
         $regex = $pattern->toRegex();
 
         $this->assertEquals($expected, $regex);
