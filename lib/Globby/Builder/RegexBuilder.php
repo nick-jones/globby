@@ -96,6 +96,24 @@ class RegexBuilder implements Builder {
     protected function translateToken(array $token) {
         $identifier = is_string($token[0]) ? NULL : $token[0];
         $value = $token[2];
+
+        $result = $this->translateTokenFromIdentifier($identifier, $value);
+
+        if ($result === NULL) {
+            throw new BuildException(sprintf('No available translation for "%s"', $value));
+        }
+
+        return $result;
+    }
+
+    /**
+     * Translates a token based on the identifier flavour.
+     *
+     * @param int $identifier
+     * @param string $value
+     * @return string|null
+     */
+    protected function translateTokenFromIdentifier($identifier, $value) {
         $result = null;
 
         if (array_key_exists($identifier, self::$tokenValueMap)) {
@@ -103,10 +121,6 @@ class RegexBuilder implements Builder {
         }
         else if (array_key_exists($identifier, self::$tokenCallbackMap)) {
             $result = $this->translateTokenUsingCallback($identifier, $value);
-        }
-
-        if ($result === NULL) {
-            throw new BuildException(sprintf('No available translation for "%s"', $value));
         }
 
         return $result;
