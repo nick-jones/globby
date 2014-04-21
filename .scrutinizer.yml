@@ -9,7 +9,7 @@ tools:
     filter:
       excluded_paths:
         - 'vendor/*'
-  php_code_coverage:
+  external_code_coverage:
     enabled: true
     filter:
       paths:
@@ -31,6 +31,8 @@ tools:
     filter:
       excluded_paths:
         - 'vendor/*'
+        - 'example/*'
+        - 'test/*'
       paths: {  }
   php_changetracking:
     enabled: true
@@ -43,8 +45,7 @@ tools:
       excluded_paths:
         - 'vendor/*'
       paths: {  }
-before_commands:
-  - "composer install --prefer-source"
-after_commands: {  }
-artifacts: {  }
-build_failure_conditions: {  }
+before_commands: { }
+after_commands: { }
+artifacts: { }
+build_failure_conditions: { }
