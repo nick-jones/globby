@@ -1,5 +1,6 @@
 filter:
   paths: ["lib/*", "test/*"]
+  excluded_paths: ["test/functional/*"]
 
 tools:
   external_code_coverage:
