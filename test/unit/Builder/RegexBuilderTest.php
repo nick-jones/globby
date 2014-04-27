@@ -80,7 +80,7 @@ class RegexBuilderTest extends \PHPUnit_Framework_TestCase
     /**
      * A more complex example, with multiple tokens being supplied to the builder.
      */
-    public function testCreateFromTokens_Multiple()
+    public function testCreateFromTokensWithMultipleTokens()
     {
         $tokens = array(
             array(Tokenizer::T_WORD, 0, 'm*ock.foo\[bar'),
@@ -104,7 +104,7 @@ class RegexBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $regex);
     }
 
-    public function testCreateFromTokens_InvalidToken()
+    public function testCreateFromTokensWithInvalidToken()
     {
         $this->setExpectedException('\Globby\Builder\BuildException', 'No available translation for "☃"');
 

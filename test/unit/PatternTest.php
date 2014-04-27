@@ -39,7 +39,7 @@ class PatternTest extends \PHPUnit_Framework_TestCase
     /**
      * Expecting Tokenizer and Builder calls on construction.
      */
-    public function testConstruct_NonLazy()
+    public function testConstructWithNonLazyOption()
     {
         $this->compiler->expects($this->once())
             ->method('compile')

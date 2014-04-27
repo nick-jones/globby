@@ -8,14 +8,14 @@ namespace Globby;
 class PatternIntegrationTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testConstruct_Invalid()
+    public function testConstructWithInvalidPattern()
     {
         $this->setExpectedException('\Globby\Tokenizer\TokenizeException', 'Premature end of pattern');
 
         new Pattern('fo[o');
     }
 
-    public function testMatch_Positive()
+    public function testMatchWithMatchingValue()
     {
         $pattern = new Pattern('foo*bar.ba[zr]?');
 
@@ -23,7 +23,7 @@ class PatternIntegrationTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($pattern->match('foo bar.barr'));
     }
 
-    public function testMatch_Negative()
+    public function testMatchWithNonMatchingValue()
     {
         $pattern = new Pattern('foo*bar.ba[zr]?');
 

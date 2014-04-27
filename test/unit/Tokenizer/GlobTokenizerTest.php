@@ -49,7 +49,7 @@ class GlobTokenizerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testParse_LexingError()
+    public function testParseWithLexingErrorThrown()
     {
         $this->setExpectedException(
             '\Globby\Tokenizer\TokenizeException',
@@ -71,7 +71,7 @@ class GlobTokenizerTest extends \PHPUnit_Framework_TestCase
         $this->tokenizer->parse($pattern);
     }
 
-    public function testParse_Incomplete()
+    public function testParseWithRemainingPushedStates()
     {
         $this->setExpectedException(
             '\Globby\Tokenizer\TokenizeException',
