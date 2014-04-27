@@ -8,14 +8,16 @@ use Phlexy\LexerFactory\Stateful\UsingCompiledRegex;
 /**
  * @package Globby\Tokenizer
  */
-class GlobTokenizerIntegrationTest extends \PHPUnit_Framework_TestCase {
+class GlobTokenizerIntegrationTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * The first elements of the arrays are a pattern to be pushed to the tokenizer. The second elements of the
      * arrays are the expected tokens to be produced.
      *
      * @return array
      */
-    public function patternTokenProvider() {
+    public function patternTokenProvider()
+    {
         return array(
             array(
                 'foo\[bar\]',
@@ -166,7 +168,8 @@ class GlobTokenizerIntegrationTest extends \PHPUnit_Framework_TestCase {
      *
      * @dataProvider patternTokenProvider
      */
-    public function testParse($pattern, $expected) {
+    public function testParse($pattern, $expected)
+    {
         $factory = new UsingCompiledRegex(
             new LexerDataGenerator()
         );

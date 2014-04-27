@@ -15,7 +15,8 @@ use Globby\Tokenizer\GlobTokenizer;
  *
  * @package Globby
  */
-class Pattern {
+class Pattern
+{
     /**
      * This option forces the compile stage to only occur when necessary (i.e. on toRegex()/match(), and not in the
      * class constructor.)
@@ -47,8 +48,8 @@ class Pattern {
      * @var array
      */
     protected $options = array(
-        self::OPTION_LAZY_COMPILE => FALSE,
-        self::OPTION_CASE_INSENSITIVE => FALSE
+        self::OPTION_LAZY_COMPILE => false,
+        self::OPTION_CASE_INSENSITIVE => false
     );
 
     /**
@@ -66,10 +67,11 @@ class Pattern {
      * @param array $options A map of OPTION_* constants => value
      * @param Compiler $compiler Compiler instance. If one is not supplied, an instance of GlobbyCompiler will be used
      */
-    public function __construct($pattern, array $options = array(), Compiler $compiler = NULL) {
+    public function __construct($pattern, array $options = array(), Compiler $compiler = null)
+    {
         $this->pattern = $pattern;
         $this->options = $options + $this->options;
-        $this->compiler = $compiler ?: $this->defaultCompiler();
+        $this->compiler = $compiler ? : $this->defaultCompiler();
 
         if (!$this->options[self::OPTION_LAZY_COMPILE]) {
             $this->regex = $this->compile();
@@ -81,11 +83,12 @@ class Pattern {
      *
      * @return string A regular expression constructed from the pattern held by this instance
      */
-    protected function compile() {
-         $regex = $this->compiler
+    protected function compile()
+    {
+        $regex = $this->compiler
             ->compile($this->pattern);
 
-         return $regex;
+        return $regex;
     }
 
     /**
@@ -94,13 +97,14 @@ class Pattern {
      * @param string $value The value to be checked against
      * @return bool TRUE if the value matched the pattern, FALSE otherwise
      */
-    public function match($value) {
+    public function match($value)
+    {
         $result = preg_match(
             $this->toRegex(),
             $value
         );
 
-        return (bool) $result;
+        return (bool)$result;
     }
 
     /**
@@ -108,7 +112,8 @@ class Pattern {
      *
      * @return string The pattern value originally supplied to this instance
      */
-    public function getPattern() {
+    public function getPattern()
+    {
         return $this->pattern;
     }
 
@@ -118,7 +123,8 @@ class Pattern {
      *
      * @return string A regular expression equivalent of the pattern value held by this instance
      */
-    public function toRegex() {
+    public function toRegex()
+    {
         if (!$this->regex) {
             $this->regex = $this->compile();
         }
@@ -129,7 +135,8 @@ class Pattern {
     /**
      * @return GlobbyCompiler
      */
-    protected function defaultCompiler() {
+    protected function defaultCompiler()
+    {
         $tokenizer = $this->defaultTokenizer();
         $builder = $this->defaultBuilder();
 
@@ -139,7 +146,8 @@ class Pattern {
     /**
      * @return GlobTokenizer
      */
-    protected function defaultTokenizer() {
+    protected function defaultTokenizer()
+    {
         $factory = new UsingCompiledRegex(
             new LexerDataGenerator()
         );
@@ -150,7 +158,8 @@ class Pattern {
     /**
      * @return RegexBuilder
      */
-    protected function defaultBuilder() {
+    protected function defaultBuilder()
+    {
         $modifiers = RegexBuilder::DEFAULT_MODIFIERS
             . ($this->options[self::OPTION_CASE_INSENSITIVE] ? 'i' : '');
 

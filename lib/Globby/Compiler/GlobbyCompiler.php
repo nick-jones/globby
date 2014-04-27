@@ -1,6 +1,7 @@
 <?php
 
 namespace Globby\Compiler;
+
 use Globby\Builder\Builder;
 use Globby\Tokenizer\Tokenizer;
 
@@ -9,7 +10,8 @@ use Globby\Tokenizer\Tokenizer;
  *
  * @package Globby\Compiler
  */
-class GlobbyCompiler implements Compiler {
+class GlobbyCompiler implements Compiler
+{
     /**
      * @var Tokenizer
      */
@@ -24,7 +26,8 @@ class GlobbyCompiler implements Compiler {
      * @param Tokenizer $tokenizer
      * @param Builder $builder
      */
-    public function __construct(Tokenizer $tokenizer, Builder $builder) {
+    public function __construct(Tokenizer $tokenizer, Builder $builder)
+    {
         $this->tokenizer = $tokenizer;
         $this->builder = $builder;
     }
@@ -33,7 +36,8 @@ class GlobbyCompiler implements Compiler {
      * @param string $pattern
      * @return string
      */
-    public function compile($pattern) {
+    public function compile($pattern)
+    {
         $tokens = $this->tokenizer
             ->parse($pattern);
 

@@ -7,7 +7,8 @@ namespace Globby\Tokenizer;
  *
  * @package Globby\Tokenizer
  */
-interface Tokenizer {
+interface Tokenizer
+{
     /**
      * Any contiguous, non-special characters.
      *

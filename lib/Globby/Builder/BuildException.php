@@ -7,4 +7,6 @@ namespace Globby\Builder;
  *
  * @package Globby\Builder
  */
-class BuildException extends \RuntimeException { }
+class BuildException extends \RuntimeException
+{
+}

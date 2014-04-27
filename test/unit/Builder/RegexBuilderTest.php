@@ -7,17 +7,20 @@ use Globby\Tokenizer\Tokenizer;
 /**
  * @package Globby\Builder
  */
-class RegexBuilderTest extends \PHPUnit_Framework_TestCase {
+class RegexBuilderTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var RegexBuilder
      */
     protected $builder;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->builder = new RegexBuilder('u', '#');
     }
 
-    public function tokenDataProvider() {
+    public function tokenDataProvider()
+    {
         return array(
             array(
                 array(Tokenizer::T_WORD, 0, 'mock'),
@@ -67,7 +70,8 @@ class RegexBuilderTest extends \PHPUnit_Framework_TestCase {
      * @param string $expected
      * @dataProvider tokenDataProvider
      */
-    public function testCreateFromTokens(array $token, $expected) {
+    public function testCreateFromTokens(array $token, $expected)
+    {
         $expected = '#^' . $expected . '$#u';
         $regex = $this->builder->createFromTokens(array($token));
         $this->assertEquals($expected, $regex);
@@ -76,7 +80,8 @@ class RegexBuilderTest extends \PHPUnit_Framework_TestCase {
     /**
      * A more complex example, with multiple tokens being supplied to the builder.
      */
-    public function testCreateFromTokens_Multiple() {
+    public function testCreateFromTokens_Multiple()
+    {
         $tokens = array(
             array(Tokenizer::T_WORD, 0, 'm*ock.foo\[bar'),
             array(Tokenizer::T_GROUP_BEGIN, 0, '['),
@@ -99,7 +104,8 @@ class RegexBuilderTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $regex);
     }
 
-    public function testCreateFromTokens_InvalidToken() {
+    public function testCreateFromTokens_InvalidToken()
+    {
         $this->setExpectedException('\Globby\Builder\BuildException', 'No available translation for "☃"');
 
         $token = array(-1, 0, '☃');

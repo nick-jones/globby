@@ -7,4 +7,6 @@ namespace Globby\Tokenizer;
  *
  * @package Globby\Tokenizer
  */
-class TokenizeException extends \RuntimeException { }
+class TokenizeException extends \RuntimeException
+{
+}

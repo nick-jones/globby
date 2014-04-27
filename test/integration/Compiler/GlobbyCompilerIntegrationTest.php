@@ -10,11 +10,13 @@ use Phlexy\LexerFactory\Stateful\UsingCompiledRegex;
 /**
  * @package Globby\Compiler
  */
-class GlobbyCompilerIntegrationTest extends \PHPUnit_Framework_TestCase {
+class GlobbyCompilerIntegrationTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * Tests GlobbyCompiler::compile() with genuine (non-mocked) Tokenizer and Builder instances
      */
-    public function testCompile() {
+    public function testCompile()
+    {
         $factory = new UsingCompiledRegex(
             new LexerDataGenerator()
         );

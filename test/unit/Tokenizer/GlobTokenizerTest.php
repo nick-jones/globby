@@ -5,7 +5,8 @@ namespace Globby\Tokenizer;
 /**
  * @package Globby\Tokenizer
  */
-class GlobTokenizerTest extends \PHPUnit_Framework_TestCase {
+class GlobTokenizerTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var GlobTokenizer
      */
@@ -16,13 +17,15 @@ class GlobTokenizerTest extends \PHPUnit_Framework_TestCase {
      */
     protected $lexerFactory;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->lexerFactory = $this->getMock('\Phlexy\LexerFactory');
 
         $this->tokenizer = new GlobTokenizer($this->lexerFactory);
     }
 
-    public function testParse() {
+    public function testParse()
+    {
         $pattern = '*';
         $expected = array(array(Tokenizer::T_WILDCARD_MULTI, 1, '*'));
 
@@ -35,7 +38,7 @@ class GlobTokenizerTest extends \PHPUnit_Framework_TestCase {
 
         $lexer->expects($this->once())
             ->method('hasPushedStates')
-            ->will($this->returnValue(FALSE));
+            ->will($this->returnValue(false));
 
         $this->lexerFactory->expects($this->once())
             ->method('createLexer')
@@ -46,7 +49,8 @@ class GlobTokenizerTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $result);
     }
 
-    public function testParse_LexingError() {
+    public function testParse_LexingError()
+    {
         $this->setExpectedException(
             '\Globby\Tokenizer\TokenizeException',
             'Lexing failed with error: invalid character'
@@ -67,7 +71,8 @@ class GlobTokenizerTest extends \PHPUnit_Framework_TestCase {
         $this->tokenizer->parse($pattern);
     }
 
-    public function testParse_Incomplete() {
+    public function testParse_Incomplete()
+    {
         $this->setExpectedException(
             '\Globby\Tokenizer\TokenizeException',
             'Premature end of pattern'
@@ -83,7 +88,7 @@ class GlobTokenizerTest extends \PHPUnit_Framework_TestCase {
 
         $lexer->expects($this->once())
             ->method('hasPushedStates')
-            ->will($this->returnValue(TRUE));
+            ->will($this->returnValue(true));
 
         $this->lexerFactory->expects($this->once())
             ->method('createLexer')

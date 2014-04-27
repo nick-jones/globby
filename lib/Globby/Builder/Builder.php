@@ -7,7 +7,8 @@ namespace Globby\Builder;
  *
  * @package Globby\Builder
  */
-interface Builder {
+interface Builder
+{
     /**
      * Create a (regex) pattern based on an array of tokens.
      *

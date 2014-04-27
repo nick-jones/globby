@@ -11,7 +11,8 @@ use Globby\Tokenizer\Tokenizer;
  *
  * @package Globby\Builder
  */
-class RegexBuilder implements Builder {
+class RegexBuilder implements Builder
+{
     /**
      * Default modifiers to be added to the constructed regular expression.
      */
@@ -60,7 +61,8 @@ class RegexBuilder implements Builder {
      * @param string $modifiers
      * @param string $delimiter
      */
-    public function __construct($modifiers = self::DEFAULT_MODIFIERS, $delimiter = '#') {
+    public function __construct($modifiers = self::DEFAULT_MODIFIERS, $delimiter = '#')
+    {
         $this->modifiers = $modifiers;
         $this->delimiter = $delimiter;
     }
@@ -73,7 +75,8 @@ class RegexBuilder implements Builder {
      * @param array $tokens
      * @return string
      */
-    public function createFromTokens(array $tokens) {
+    public function createFromTokens(array $tokens)
+    {
         $buffer = $this->delimiter . '^';
 
         foreach ($tokens as $token) {
@@ -93,13 +96,14 @@ class RegexBuilder implements Builder {
      * @return string
      * @throws BuildException
      */
-    protected function translateToken(array $token) {
-        $identifier = is_string($token[0]) ? NULL : $token[0];
+    protected function translateToken(array $token)
+    {
+        $identifier = is_string($token[0]) ? null : $token[0];
         $value = $token[2];
 
         $result = $this->translateTokenFromIdentifier($identifier, $value);
 
-        if ($result === NULL) {
+        if ($result === null) {
             throw new BuildException(sprintf('No available translation for "%s"', $value));
         }
 
@@ -113,13 +117,13 @@ class RegexBuilder implements Builder {
      * @param string $value
      * @return string|null
      */
-    protected function translateTokenFromIdentifier($identifier, $value) {
+    protected function translateTokenFromIdentifier($identifier, $value)
+    {
         $result = null;
 
         if (array_key_exists($identifier, self::$tokenValueMap)) {
             $result = $this->translateTokenUsingMap($identifier);
-        }
-        else if (array_key_exists($identifier, self::$tokenCallbackMap)) {
+        } elseif (array_key_exists($identifier, self::$tokenCallbackMap)) {
             $result = $this->translateTokenUsingCallback($identifier, $value);
         }
 
@@ -132,7 +136,8 @@ class RegexBuilder implements Builder {
      * @param int $identifier
      * @return string
      */
-    protected function translateTokenUsingMap($identifier) {
+    protected function translateTokenUsingMap($identifier)
+    {
         return self::$tokenValueMap[$identifier];
     }
 
@@ -143,7 +148,8 @@ class RegexBuilder implements Builder {
      * @param string $value
      * @return string
      */
-    protected function translateTokenUsingCallback($identifier, $value) {
+    protected function translateTokenUsingCallback($identifier, $value)
+    {
         $method = self::$tokenCallbackMap[$identifier];
 
         return call_user_func(
@@ -156,7 +162,8 @@ class RegexBuilder implements Builder {
      * @param string $value
      * @return string
      */
-    protected function translateWordToken($value) {
+    protected function translateWordToken($value)
+    {
         // Remove now irrelevant escaping to allow us to apply preg_quote
         $value = preg_replace('#\\\\([*\[\]?\\\\])#', '\\1', $value);
 
@@ -167,7 +174,8 @@ class RegexBuilder implements Builder {
      * @param string $value
      * @return string
      */
-    protected function translateGroupRangeToken($value) {
+    protected function translateGroupRangeToken($value)
+    {
         // The entire value cannot be escaped, as the range symbol (-) is escaped by preg_quote
         $min = preg_quote($value[0], $this->delimiter);
         $max = preg_quote($value[2], $this->delimiter);
@@ -179,7 +187,8 @@ class RegexBuilder implements Builder {
      * @param string $value
      * @return string
      */
-    protected function translateGroupCharacterToken($value) {
+    protected function translateGroupCharacterToken($value)
+    {
         return preg_quote($value, $this->delimiter);
     }
 
@@ -187,7 +196,8 @@ class RegexBuilder implements Builder {
      * @param string $value
      * @return string
      */
-    protected function translateGroupCharacterClassToken($value) {
+    protected function translateGroupCharacterClassToken($value)
+    {
         // The value should be verified, implementation to be added.
         return $value;
     }

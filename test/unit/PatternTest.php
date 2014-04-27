@@ -4,7 +4,8 @@ namespace Globby;
 
 use Globby\Tokenizer\Tokenizer;
 
-class PatternTest extends \PHPUnit_Framework_TestCase {
+class PatternTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var Pattern
      */
@@ -20,11 +21,12 @@ class PatternTest extends \PHPUnit_Framework_TestCase {
      */
     protected $compiler;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->compiler = $this->getMock('\Globby\Compiler\Compiler');
 
         $options = array(
-            Pattern::OPTION_LAZY_COMPILE => TRUE
+            Pattern::OPTION_LAZY_COMPILE => true
         );
 
         $this->pattern = new Pattern(
@@ -37,19 +39,21 @@ class PatternTest extends \PHPUnit_Framework_TestCase {
     /**
      * Expecting Tokenizer and Builder calls on construction.
      */
-    public function testConstruct_NonLazy() {
+    public function testConstruct_NonLazy()
+    {
         $this->compiler->expects($this->once())
             ->method('compile')
             ->will($this->returnValue('#^x$#u'));
 
         $options = array(
-            Pattern::OPTION_LAZY_COMPILE => FALSE
+            Pattern::OPTION_LAZY_COMPILE => false
         );
 
         new Pattern('x', $options, $this->compiler);
     }
 
-    public function testToRegex() {
+    public function testToRegex()
+    {
         $expected = '#foo.*bar#u';
 
         $this->compiler->expects($this->once())
@@ -63,7 +67,8 @@ class PatternTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $this->pattern->toRegex());
     }
 
-    public function testMatch() {
+    public function testMatch()
+    {
         $regex = '#^foo.*bar$#u';
 
         $this->compiler->expects($this->once())
@@ -76,7 +81,8 @@ class PatternTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse($this->pattern->match('foo-bar-'));
     }
 
-    public function testGetPattern() {
+    public function testGetPattern()
+    {
         $result = $this->pattern->getPattern();
 
         $this->assertEquals($this->patternValue, $result);

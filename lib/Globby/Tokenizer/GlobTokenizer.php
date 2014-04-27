@@ -18,7 +18,8 @@ use Phlexy\LexingException;
  * @link http://man7.org/linux/man-pages/man7/glob.7.html
  * @package Globby\Tokenizer
  */
-class GlobTokenizer implements Tokenizer {
+class GlobTokenizer implements Tokenizer
+{
     /**
      * Phlexy lexer factory instance for creating new Lexer instances.
      *
@@ -29,7 +30,8 @@ class GlobTokenizer implements Tokenizer {
     /**
      * @param LexerFactory $factory
      */
-    public function __construct(LexerFactory $factory) {
+    public function __construct(LexerFactory $factory)
+    {
         $this->factory = $factory;
     }
 
@@ -40,13 +42,13 @@ class GlobTokenizer implements Tokenizer {
      * @return array
      * @throws TokenizeException
      */
-    public function parse($pattern) {
+    public function parse($pattern)
+    {
         $lexer = $this->createLexer();
 
         try {
             $result = $lexer->lex($pattern);
-        }
-        catch (LexingException $e) {
+        } catch (LexingException $e) {
             $message = sprintf('Lexing failed with error: %s', $e->getMessage());
             throw new TokenizeException($message, 0, $e);
         }
@@ -66,7 +68,8 @@ class GlobTokenizer implements Tokenizer {
      *
      * @return Stateful
      */
-    protected function createLexer() {
+    protected function createLexer()
+    {
         return $this->factory
             ->createLexer($this->createDefinition());
     }
@@ -77,7 +80,8 @@ class GlobTokenizer implements Tokenizer {
      *
      * @return array
      */
-    protected function createDefinition() {
+    protected function createDefinition()
+    {
         return array(
             'INITIAL' => $this->createInitialDefinition(),
             'IN_GROUP' => $this->createInGroupDefinition(),
@@ -90,7 +94,8 @@ class GlobTokenizer implements Tokenizer {
      *
      * @return array
      */
-    protected function createInitialDefinition() {
+    protected function createInitialDefinition()
+    {
         return array(
             /*
              * Match against non-special characters. To explain the components of this:
@@ -117,7 +122,7 @@ class GlobTokenizer implements Tokenizer {
              * context, so it must be checked at this level. To achieve this we lookahead for the character, and ensure
              * it's captured by adding a capturing group inside (regex lookarounds do not capture).
              */
-            '\[([!^]?)(?=(\])?)' => function(Stateful $lexer, $matches) {
+            '\[([!^]?)(?=(\])?)' => function (Stateful $lexer, $matches) {
                 // Determine the state to enter (depending on whether the lookahead succeeded, i.e. "]" is the first
                 // character of the grouping)
                 $state = isset($matches[2])
@@ -139,12 +144,13 @@ class GlobTokenizer implements Tokenizer {
      *
      * @return array
      */
-    protected function createInGroupDefinition() {
+    protected function createInGroupDefinition()
+    {
         return array(
             // Close of a grouping. Note that we avoid trouble with the "valid" inclusion of this character at the first
             // position by consuming it in the IN_GROUP_SPECIAL_FIRST state. Therefore, any further occurrences are
             // indeed valid closing of the current character grouping.
-            '\]' => function(Stateful $lexer) {
+            '\]' => function (Stateful $lexer) {
                 $lexer->popState();
                 return self::T_GROUP_END;
             },
@@ -163,15 +169,16 @@ class GlobTokenizer implements Tokenizer {
      *
      * @return array
      */
-    protected function createInGroupSpecialFirstDefinition() {
+    protected function createInGroupSpecialFirstDefinition()
+    {
         return array(
             // Handles cases where the range start character is a "]".
-            '\]-[^\]]' => function(Stateful $lexer) {
+            '\]-[^\]]' => function (Stateful $lexer) {
                 $lexer->swapState('IN_GROUP');
                 return self::T_GROUP_RANGE;
             },
             // Consumes the single character as a T_GROUP_CHARACTER, and swaps back into the normal IN_GROUP state
-            '\]' => function(Stateful $lexer) {
+            '\]' => function (Stateful $lexer) {
                 $lexer->swapState('IN_GROUP');
                 return self::T_GROUP_CHARACTER;
             }

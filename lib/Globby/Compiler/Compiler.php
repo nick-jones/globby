@@ -8,7 +8,8 @@ namespace Globby\Compiler;
  *
  * @package Globby\Compiler
  */
-interface Compiler {
+interface Compiler
+{
     /**
      * @param string $pattern
      * @return string

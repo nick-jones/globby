@@ -15,7 +15,8 @@ if (!function_exists('wildcard_match')) {
      * @param string $value
      * @return bool
      */
-    function wildcard_match($pattern, $value) {
+    function wildcard_match($pattern, $value)
+    {
         $globby = new \Globby\Pattern($pattern);
         return $globby->match($value);
     }
@@ -35,14 +36,15 @@ if (!function_exists('wildcard_match')) {
  *
  * @param array $patterns
  */
-function test(array $patterns) {
+function test(array $patterns)
+{
     foreach ($patterns as $pattern => $values) {
         foreach ($values[0] as $positive) {
-            validate($pattern, $positive, TRUE);
+            validate($pattern, $positive, true);
         }
 
         foreach ($values[1] as $negative) {
-            validate($pattern, $negative, FALSE);
+            validate($pattern, $negative, false);
         }
     }
 }
@@ -53,13 +55,14 @@ function test(array $patterns) {
  * @param bool $expected
  * @throws \UnexpectedValueException
  */
-function validate($pattern, $value, $expected) {
+function validate($pattern, $value, $expected)
+{
     $result = wildcard_match($pattern, $value);
 
     if ($result !== $expected) {
         echo 'F';
 
-        $verb = $expected === FALSE ? 'should not' : 'should';
+        $verb = $expected === false ? 'should not' : 'should';
         $message = sprintf('Pattern "%s" %s match value "%s".', $pattern, $verb, $value);
 
         throw new \UnexpectedValueException($message);
@@ -71,7 +74,8 @@ function validate($pattern, $value, $expected) {
 /**
  * @param array $paths
  */
-function testPaths(array $paths) {
+function testPaths(array $paths)
+{
     foreach ($paths as $path) {
         $patterns = json_decode(file_get_contents($path), true);
         echo "\n\n{$path}:\n";
@@ -82,13 +86,13 @@ function testPaths(array $paths) {
 /**
  * @param array $paths
  */
-function run(array $paths) {
+function run(array $paths)
+{
     try {
         echo "Globby Tests";
         testPaths($paths);
         echo "\n\nOK! All passed.\n";
-    }
-    catch (Exception $e) {
+    } catch (Exception $e) {
         echo "\n\n{$e}\n\nFailed.\n";
         exit(1);
     }
@@ -97,8 +101,7 @@ function run(array $paths) {
 if ($argc > 1) {
     array_shift($argv);
     $files = $argv;
-}
-else {
+} else {
     $files = glob(__DIR__ . '/patterns_*.json');
 }
 

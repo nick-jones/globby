@@ -5,22 +5,26 @@ namespace Globby;
 /**
  * @package Globby
  */
-class PatternIntegrationTest extends \PHPUnit_Framework_TestCase {
+class PatternIntegrationTest extends \PHPUnit_Framework_TestCase
+{
 
-    public function testConstruct_Invalid() {
+    public function testConstruct_Invalid()
+    {
         $this->setExpectedException('\Globby\Tokenizer\TokenizeException', 'Premature end of pattern');
 
         new Pattern('fo[o');
     }
 
-    public function testMatch_Positive() {
+    public function testMatch_Positive()
+    {
         $pattern = new Pattern('foo*bar.ba[zr]?');
 
         $this->assertTrue($pattern->match('foo.bar.bazo'));
         $this->assertTrue($pattern->match('foo bar.barr'));
     }
 
-    public function testMatch_Negative() {
+    public function testMatch_Negative()
+    {
         $pattern = new Pattern('foo*bar.ba[zr]?');
 
         $this->assertFalse($pattern->match('foo.bar-bazz'));
@@ -31,7 +35,8 @@ class PatternIntegrationTest extends \PHPUnit_Framework_TestCase {
     /**
      * @return array
      */
-    public function regexDataProvider() {
+    public function regexDataProvider()
+    {
         return array(
             array(
                 'foo*bar.ba[zr]?[!1[:alpha:]4-59][^x]',
@@ -40,7 +45,7 @@ class PatternIntegrationTest extends \PHPUnit_Framework_TestCase {
             array(
                 'foo*bar',
                 '#^foo.*bar$#ui',
-                array(Pattern::OPTION_CASE_INSENSITIVE => TRUE)
+                array(Pattern::OPTION_CASE_INSENSITIVE => true)
             )
         );
     }
@@ -51,7 +56,8 @@ class PatternIntegrationTest extends \PHPUnit_Framework_TestCase {
      * @param array $options
      * @dataProvider regexDataProvider
      */
-    public function testToRegex($pattern, $expected, array $options = array()) {
+    public function testToRegex($pattern, $expected, array $options = array())
+    {
         $pattern = new Pattern($pattern, $options);
         $regex = $pattern->toRegex();
 

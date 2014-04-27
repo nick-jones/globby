@@ -5,7 +5,8 @@ namespace Globby;
 use Globby\Compiler\GlobbyCompiler;
 use Globby\Tokenizer\Tokenizer;
 
-class CompilerTest extends \PHPUnit_Framework_TestCase {
+class CompilerTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var GlobbyCompiler
      */
@@ -21,7 +22,8 @@ class CompilerTest extends \PHPUnit_Framework_TestCase {
      */
     protected $builder;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->tokenizer = $this->getMock('\Globby\Tokenizer\Tokenizer');
         $this->builder = $this->getMock('\Globby\Builder\Builder');
 
@@ -31,7 +33,8 @@ class CompilerTest extends \PHPUnit_Framework_TestCase {
         );
     }
 
-    public function testCompile() {
+    public function testCompile()
+    {
         $expected = '#foo.*bar#u';
 
         $patternValue = 'foo*bar';
