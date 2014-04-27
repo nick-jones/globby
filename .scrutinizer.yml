@@ -1,51 +1,38 @@
 filter:
-  excluded_paths:
-    - 'vendor/*'
+  paths: ["lib/*", "test/*"]
+
 tools:
-  php_analyzer:
-    enabled: true
-    extensions:
-      - php
-    filter:
-      excluded_paths:
-        - 'vendor/*'
   external_code_coverage:
     enabled: true
     filter:
-      paths:
-        - 'lib/*'
+      paths: ["lib/*"]
+  php_code_sniffer:
+    enabled: true
+    config:
+      standard: PSR2
+  php_loc:
+    enabled: true
+    excluded_dirs: ["coverage", "example", "test", "vendor"]
+  php_cpd:
+    enabled: true
+    filter:
+      paths: ["lib/*"]
+  php_cs_fixer:
+    enabled: true
+    config:
+      level: all
   php_pdepend:
     enabled: true
-    configuration_file: null
-    suffixes:
-      - php
-    excluded_dirs: {  }
+    excluded_dirs: ["coverage", "example", "test", "vendor"]
+  php_analyzer:
+    enabled: true
     filter:
-      excluded_paths:
-        - 'vendor/*'
+      paths: ["lib/*"]
   php_hhvm:
+    enabled: true
+  php_mess_detector:
     enabled: true
   php_sim:
     enabled: true
-    min_mass: 16
-    filter:
-      excluded_paths:
-        - 'vendor/*'
-        - 'example/*'
-        - 'test/*'
-      paths: {  }
   php_changetracking:
     enabled: true
-    bug_patterns:
-      - '\bfix(?:es|ed)?\b'
-    feature_patterns:
-      - '\badd(?:s|ed)?\b'
-      - '\bimplement(?:s|ed)?\b'
-    filter:
-      excluded_paths:
-        - 'vendor/*'
-      paths: {  }
-before_commands: { }
-after_commands: { }
-artifacts: { }
-build_failure_conditions: { }
