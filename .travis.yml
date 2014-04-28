@@ -12,6 +12,7 @@ before_script:
 script:
   - mkdir -p build/logs
   - phpunit --coverage-clover build/logs/clover.xml
+  - php test/functional/test-patterns.php
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
