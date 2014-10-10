@@ -1,11 +1,11 @@
 <?php
 
-namespace Globby\Tokenizer;
+namespace Globby;
 
 /**
  * Classes implementing this interface must provide a means to produce an array of tokens via the parse() method.
  *
- * @package Globby\Tokenizer
+ * @package Globby
  */
 interface Tokenizer
 {

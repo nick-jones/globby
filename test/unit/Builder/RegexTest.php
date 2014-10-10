@@ -2,21 +2,21 @@
 
 namespace Globby\Builder;
 
-use Globby\Tokenizer\Tokenizer;
+use Globby\Tokenizer;
 
 /**
  * @package Globby\Builder
  */
-class RegexBuilderTest extends \PHPUnit_Framework_TestCase
+class RegexTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var RegexBuilder
+     * @var Regex
      */
     protected $builder;
 
     protected function setUp()
     {
-        $this->builder = new RegexBuilder('u', '#');
+        $this->builder = new Regex('u', '#');
     }
 
     public function tokenDataProvider()

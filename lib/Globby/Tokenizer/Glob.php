@@ -2,6 +2,7 @@
 
 namespace Globby\Tokenizer;
 
+use Globby\Tokenizer;
 use Phlexy\Lexer\Stateful;
 use Phlexy\Lexer;
 use Phlexy\LexerFactory;
@@ -18,7 +19,7 @@ use Phlexy\LexingException;
  * @link http://man7.org/linux/man-pages/man7/glob.7.html
  * @package Globby\Tokenizer
  */
-class GlobTokenizer implements Tokenizer
+class Glob implements Tokenizer
 {
     /**
      * Phlexy lexer factory instance for creating new Lexer instances.

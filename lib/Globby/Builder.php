@@ -1,11 +1,11 @@
 <?php
 
-namespace Globby\Builder;
+namespace Globby;
 
 /**
  * Builder implementations should construct "something" (most likely a regex) from an array of tokens.
  *
- * @package Globby\Builder
+ * @package Globby
  */
 interface Builder
 {

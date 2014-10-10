@@ -2,7 +2,7 @@
 
 namespace Globby;
 
-use Globby\Tokenizer\Tokenizer;
+use Globby\Tokenizer;
 
 class PatternTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,13 +17,13 @@ class PatternTest extends \PHPUnit_Framework_TestCase
     protected $patternValue = 'foo*bar';
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Globby\Compiler\Compiler
+     * @var \PHPUnit_Framework_MockObject_MockObject|Compiler
      */
     protected $compiler;
 
     protected function setUp()
     {
-        $this->compiler = $this->getMock('\Globby\Compiler\Compiler');
+        $this->compiler = $this->getMock('\Globby\Compiler');
 
         $options = array(
             Pattern::OPTION_LAZY_COMPILE => true

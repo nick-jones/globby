@@ -1,12 +1,12 @@
 <?php
 
-namespace Globby\Compiler;
+namespace Globby;
 
 /**
  * The job of a Compiler implementation is to translate a glob pattern expression to a perl compatible regular
  * expression.
  *
- * @package Globby\Compiler
+ * @package Globby
  */
 interface Compiler
 {

@@ -2,13 +2,14 @@
 
 namespace Globby\Tokenizer;
 
+use Globby\Tokenizer;
 use Phlexy\LexerDataGenerator;
 use Phlexy\LexerFactory\Stateful\UsingCompiledRegex;
 
 /**
  * @package Globby\Tokenizer
  */
-class GlobTokenizerIntegrationTest extends \PHPUnit_Framework_TestCase
+class GlobIntegrationTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * The first elements of the arrays are a pattern to be pushed to the tokenizer. The second elements of the
@@ -174,7 +175,7 @@ class GlobTokenizerIntegrationTest extends \PHPUnit_Framework_TestCase
             new LexerDataGenerator()
         );
 
-        $tokenizer = new GlobTokenizer($factory);
+        $tokenizer = new Glob($factory);
         $tokens = $tokenizer->parse($pattern);
 
         $this->assertEquals($expected, $tokens);

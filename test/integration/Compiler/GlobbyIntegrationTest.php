@@ -2,18 +2,18 @@
 
 namespace Globby\Compiler;
 
-use Globby\Builder\RegexBuilder;
-use Globby\Tokenizer\GlobTokenizer;
+use Globby\Builder\Regex;
+use Globby\Tokenizer\Glob;
 use Phlexy\LexerDataGenerator;
 use Phlexy\LexerFactory\Stateful\UsingCompiledRegex;
 
 /**
  * @package Globby\Compiler
  */
-class GlobbyCompilerIntegrationTest extends \PHPUnit_Framework_TestCase
+class GlobbyIntegrationTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Tests GlobbyCompiler::compile() with genuine (non-mocked) Tokenizer and Builder instances
+     * Tests Globby::compile() with genuine (non-mocked) Tokenizer and Builder instances
      */
     public function testCompile()
     {
@@ -21,10 +21,10 @@ class GlobbyCompilerIntegrationTest extends \PHPUnit_Framework_TestCase
             new LexerDataGenerator()
         );
 
-        $tokenizer = new GlobTokenizer($factory);
-        $builder = new RegexBuilder();
+        $tokenizer = new Glob($factory);
+        $builder = new Regex();
 
-        $compiler = new GlobbyCompiler($tokenizer, $builder);
+        $compiler = new Globby($tokenizer, $builder);
 
         $pattern = 'foo*bar.ba[zr]?[!1[:alpha:]4-59][^x]';
         $expected = '#^foo.*bar\.ba[zr].[^1[:alpha:]4-59][^x]$#u';

@@ -2,7 +2,8 @@
 
 namespace Globby\Builder;
 
-use Globby\Tokenizer\Tokenizer;
+use Globby\Builder;
+use Globby\Tokenizer;
 
 /**
  * This class consumes an array of pattern tokens and constructs a regular expression. It takes a rather naive approach
@@ -11,7 +12,7 @@ use Globby\Tokenizer\Tokenizer;
  *
  * @package Globby\Builder
  */
-class RegexBuilder implements Builder
+class Regex implements Builder
 {
     /**
      * Default modifiers to be added to the constructed regular expression.

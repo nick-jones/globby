@@ -2,13 +2,16 @@
 
 namespace Globby\Tokenizer;
 
+use Globby\Tokenizer;
+use Phlexy\LexingException;
+
 /**
  * @package Globby\Tokenizer
  */
-class GlobTokenizerTest extends \PHPUnit_Framework_TestCase
+class GlobTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var GlobTokenizer
+     * @var Glob
      */
     protected $tokenizer;
 
@@ -21,7 +24,7 @@ class GlobTokenizerTest extends \PHPUnit_Framework_TestCase
     {
         $this->lexerFactory = $this->getMock('\Phlexy\LexerFactory');
 
-        $this->tokenizer = new GlobTokenizer($this->lexerFactory);
+        $this->tokenizer = new Glob($this->lexerFactory);
     }
 
     public function testParse()
@@ -62,7 +65,7 @@ class GlobTokenizerTest extends \PHPUnit_Framework_TestCase
 
         $lexer->expects($this->once())
             ->method('lex')
-            ->will($this->throwException(new \Phlexy\LexingException('invalid character')));
+            ->will($this->throwException(new LexingException('invalid character')));
 
         $this->lexerFactory->expects($this->once())
             ->method('createLexer')

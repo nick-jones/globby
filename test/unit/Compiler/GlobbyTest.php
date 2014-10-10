@@ -2,32 +2,32 @@
 
 namespace Globby;
 
-use Globby\Compiler\GlobbyCompiler;
-use Globby\Tokenizer\Tokenizer;
+use Globby\Compiler\Globby;
+use Globby\Tokenizer;
 
-class CompilerTest extends \PHPUnit_Framework_TestCase
+class GlobbyTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var GlobbyCompiler
+     * @var Globby
      */
     protected $compiler;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Globby\Tokenizer\Tokenizer
+     * @var \PHPUnit_Framework_MockObject_MockObject|Tokenizer
      */
     protected $tokenizer;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Globby\Builder\Builder
+     * @var \PHPUnit_Framework_MockObject_MockObject|Builder
      */
     protected $builder;
 
     protected function setUp()
     {
-        $this->tokenizer = $this->getMock('\Globby\Tokenizer\Tokenizer');
-        $this->builder = $this->getMock('\Globby\Builder\Builder');
+        $this->tokenizer = $this->getMock('\Globby\Tokenizer');
+        $this->builder = $this->getMock('\Globby\Builder');
 
-        $this->compiler = new GlobbyCompiler(
+        $this->compiler = new Globby(
             $this->tokenizer,
             $this->builder
         );

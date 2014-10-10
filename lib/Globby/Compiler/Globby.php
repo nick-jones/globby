@@ -2,15 +2,16 @@
 
 namespace Globby\Compiler;
 
-use Globby\Builder\Builder;
-use Globby\Tokenizer\Tokenizer;
+use Globby\Builder;
+use Globby\Compiler;
+use Globby\Tokenizer;
 
 /**
  * Standard compiler for Globby. This utilises Tokenizer and Builder implementations to produce a regular expression.
  *
  * @package Globby\Compiler
  */
-class GlobbyCompiler implements Compiler
+class Globby implements Compiler
 {
     /**
      * @var Tokenizer

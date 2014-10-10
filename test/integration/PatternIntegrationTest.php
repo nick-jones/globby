@@ -7,7 +7,6 @@ namespace Globby;
  */
 class PatternIntegrationTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testConstructWithInvalidPattern()
     {
         $this->setExpectedException('\Globby\Tokenizer\TokenizeException', 'Premature end of pattern');
