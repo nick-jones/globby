@@ -3,6 +3,10 @@
 namespace Globby\Tokenizer;
 
 use Globby\Tokenizer;
+
+use Globby\Tokenizer\TokenizeException;
+use Phlexy\Lexer\Stateful as StatefulLexer;
+use Phlexy\LexerFactory;
 use Phlexy\LexingException;
 
 /**
@@ -22,7 +26,7 @@ class GlobTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->lexerFactory = $this->getMock('\Phlexy\LexerFactory');
+        $this->lexerFactory = $this->getMock(LexerFactory::CLASS);
 
         $this->tokenizer = new Glob($this->lexerFactory);
     }
@@ -30,9 +34,9 @@ class GlobTest extends \PHPUnit_Framework_TestCase
     public function testParse()
     {
         $pattern = '*';
-        $expected = array(array(Tokenizer::T_WILDCARD_MULTI, 1, '*'));
+        $expected = [[Tokenizer::T_WILDCARD_MULTI, 1, '*']];
 
-        $lexer = $this->getMock('\Phlexy\Lexer\Stateful');
+        $lexer = $this->getMock(StatefulLexer::CLASS);
 
         $lexer->expects($this->once())
             ->method('lex')
@@ -54,14 +58,11 @@ class GlobTest extends \PHPUnit_Framework_TestCase
 
     public function testParseWithLexingErrorThrown()
     {
-        $this->setExpectedException(
-            '\Globby\Tokenizer\TokenizeException',
-            'Lexing failed with error: invalid character'
-        );
+        $this->setExpectedException(TokenizeException::CLASS, 'Lexing failed with error: invalid character');
 
         $pattern = '*';
 
-        $lexer = $this->getMock('\Phlexy\Lexer\Stateful');
+        $lexer = $this->getMock(StatefulLexer::CLASS);
 
         $lexer->expects($this->once())
             ->method('lex')
@@ -76,18 +77,15 @@ class GlobTest extends \PHPUnit_Framework_TestCase
 
     public function testParseWithRemainingPushedStates()
     {
-        $this->setExpectedException(
-            '\Globby\Tokenizer\TokenizeException',
-            'Premature end of pattern'
-        );
+        $this->setExpectedException(TokenizeException::CLASS, 'Premature end of pattern');
 
         $pattern = '[';
 
-        $lexer = $this->getMock('\Phlexy\Lexer\Stateful');
+        $lexer = $this->getMock(StatefulLexer::CLASS);
 
         $lexer->expects($this->once())
             ->method('lex')
-            ->will($this->returnValue(array()));
+            ->will($this->returnValue([]));
 
         $lexer->expects($this->once())
             ->method('hasPushedStates')

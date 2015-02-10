@@ -83,11 +83,11 @@ class Glob implements Tokenizer
      */
     protected function createDefinition()
     {
-        return array(
+        return [
             'INITIAL' => $this->createInitialDefinition(),
             'IN_GROUP' => $this->createInGroupDefinition(),
             'IN_GROUP_SPECIAL_FIRST' => $this->createInGroupSpecialFirstDefinition()
-        );
+        ];
     }
 
     /**
@@ -97,7 +97,7 @@ class Glob implements Tokenizer
      */
     protected function createInitialDefinition()
     {
-        return array(
+        return [
             /*
              * Match against non-special characters. To explain the components of this:
              *
@@ -137,7 +137,7 @@ class Glob implements Tokenizer
                     ? self::T_GROUP_BEGIN_NEGATED
                     : self::T_GROUP_BEGIN;
             }
-        );
+        ];
     }
 
     /**
@@ -147,7 +147,7 @@ class Glob implements Tokenizer
      */
     protected function createInGroupDefinition()
     {
-        return array(
+        return [
             // Close of a grouping. Note that we avoid trouble with the "valid" inclusion of this character at the first
             // position by consuming it in the IN_GROUP_SPECIAL_FIRST state. Therefore, any further occurrences are
             // indeed valid closing of the current character grouping.
@@ -160,7 +160,7 @@ class Glob implements Tokenizer
             '.-[^\]]' => self::T_GROUP_RANGE,
             '\[:[a-z]+:\]' => self::T_GROUP_CHARACTER_CLASS,
             '.' => self::T_GROUP_CHARACTER
-        );
+        ];
     }
 
     /**
@@ -172,7 +172,7 @@ class Glob implements Tokenizer
      */
     protected function createInGroupSpecialFirstDefinition()
     {
-        return array(
+        return [
             // Handles cases where the range start character is a "]".
             '\]-[^\]]' => function (Stateful $lexer) {
                 $lexer->swapState('IN_GROUP');
@@ -183,6 +183,6 @@ class Glob implements Tokenizer
                 $lexer->swapState('IN_GROUP');
                 return self::T_GROUP_CHARACTER;
             }
-        );
+        ];
     }
 }

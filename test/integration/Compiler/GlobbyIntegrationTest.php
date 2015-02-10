@@ -4,6 +4,7 @@ namespace Globby\Compiler;
 
 use Globby\Builder\Regex;
 use Globby\Tokenizer\Glob;
+
 use Phlexy\LexerDataGenerator;
 use Phlexy\LexerFactory\Stateful\UsingCompiledRegex;
 

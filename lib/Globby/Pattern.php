@@ -47,10 +47,10 @@ class Pattern
     /**
      * @var array
      */
-    protected $options = array(
+    protected $options = [
         self::OPTION_LAZY_COMPILE => false,
         self::OPTION_CASE_INSENSITIVE => false
-    );
+    ];
 
     /**
      * Object implementing the Compiler interface to perform the compile step.
@@ -67,7 +67,7 @@ class Pattern
      * @param array $options A map of OPTION_* constants => value
      * @param Compiler $compiler Compiler instance. If one is not supplied, an instance of Globby will be used
      */
-    public function __construct($pattern, array $options = array(), Compiler $compiler = null)
+    public function __construct($pattern, array $options = [], Compiler $compiler = null)
     {
         $this->pattern = $pattern;
         $this->options = $options + $this->options;

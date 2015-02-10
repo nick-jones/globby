@@ -23,11 +23,9 @@ class PatternTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->compiler = $this->getMock('\Globby\Compiler');
+        $this->compiler = $this->getMock(Compiler::CLASS);
 
-        $options = array(
-            Pattern::OPTION_LAZY_COMPILE => true
-        );
+        $options = [Pattern::OPTION_LAZY_COMPILE => true];
 
         $this->pattern = new Pattern(
             $this->patternValue,
@@ -45,9 +43,7 @@ class PatternTest extends \PHPUnit_Framework_TestCase
             ->method('compile')
             ->will($this->returnValue('#^x$#u'));
 
-        $options = array(
-            Pattern::OPTION_LAZY_COMPILE => false
-        );
+        $options = [Pattern::OPTION_LAZY_COMPILE => false];
 
         new Pattern('x', $options, $this->compiler);
     }

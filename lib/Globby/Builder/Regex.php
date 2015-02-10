@@ -38,25 +38,25 @@ class Regex implements Builder
      *
      * @var array
      */
-    protected static $tokenValueMap = array(
+    protected static $tokenValueMap = [
         Tokenizer::T_WILDCARD_MULTI => '.*',
         Tokenizer::T_WILDCARD_SINGLE => '.',
         Tokenizer::T_GROUP_BEGIN => '[',
         Tokenizer::T_GROUP_BEGIN_NEGATED => '[^',
         Tokenizer::T_GROUP_END => ']'
-    );
+    ];
 
     /**
      * Wildcard token -> internal value translation callback mapping.
      *
      * @var array
      */
-    protected static $tokenCallbackMap = array(
+    protected static $tokenCallbackMap = [
         Tokenizer::T_WORD => 'translateWordToken',
         Tokenizer::T_GROUP_CHARACTER => 'translateGroupCharacterToken',
         Tokenizer::T_GROUP_RANGE => 'translateGroupRangeToken',
         Tokenizer::T_GROUP_CHARACTER_CLASS => 'translateGroupCharacterClassToken'
-    );
+    ];
 
     /**
      * @param string $modifiers
@@ -154,7 +154,7 @@ class Regex implements Builder
         $method = self::$tokenCallbackMap[$identifier];
 
         return call_user_func(
-            array($this, $method),
+            [$this, $method],
             $value
         );
     }

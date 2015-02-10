@@ -2,6 +2,8 @@
 
 namespace Globby;
 
+use Globby\Tokenizer\TokenizeException;
+
 /**
  * @package Globby
  */
@@ -9,7 +11,7 @@ class PatternIntegrationTest extends \PHPUnit_Framework_TestCase
 {
     public function testConstructWithInvalidPattern()
     {
-        $this->setExpectedException('\Globby\Tokenizer\TokenizeException', 'Premature end of pattern');
+        $this->setExpectedException(TokenizeException::CLASS, 'Premature end of pattern');
 
         new Pattern('fo[o');
     }
@@ -36,17 +38,17 @@ class PatternIntegrationTest extends \PHPUnit_Framework_TestCase
      */
     public function regexDataProvider()
     {
-        return array(
-            array(
+        return [
+            [
                 'foo*bar.ba[zr]?[!1[:alpha:]4-59][^x]',
                 '#^foo.*bar\.ba[zr].[^1[:alpha:]4-59][^x]$#u',
-            ),
-            array(
+            ],
+            [
                 'foo*bar',
                 '#^foo.*bar$#ui',
-                array(Pattern::OPTION_CASE_INSENSITIVE => true)
-            )
-        );
+                [Pattern::OPTION_CASE_INSENSITIVE => true]
+            ]
+        ];
     }
 
     /**
@@ -55,7 +57,7 @@ class PatternIntegrationTest extends \PHPUnit_Framework_TestCase
      * @param array $options
      * @dataProvider regexDataProvider
      */
-    public function testToRegex($pattern, $expected, array $options = array())
+    public function testToRegex($pattern, $expected, array $options = [])
     {
         $pattern = new Pattern($pattern, $options);
         $regex = $pattern->toRegex();

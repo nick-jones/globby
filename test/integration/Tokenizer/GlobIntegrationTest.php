@@ -3,6 +3,7 @@
 namespace Globby\Tokenizer;
 
 use Globby\Tokenizer;
+
 use Phlexy\LexerDataGenerator;
 use Phlexy\LexerFactory\Stateful\UsingCompiledRegex;
 
@@ -19,149 +20,149 @@ class GlobIntegrationTest extends \PHPUnit_Framework_TestCase
      */
     public function patternTokenProvider()
     {
-        return array(
-            array(
+        return [
+            [
                 'foo\[bar\]',
-                array(
-                    array(Tokenizer::T_WORD, 1, 'foo\[bar\]')
-                )
-            ),
-            array(
+                [
+                    [Tokenizer::T_WORD, 1, 'foo\[bar\]']
+                ]
+            ],
+            [
                 'foo*bar',
-                array(
-                    array(Tokenizer::T_WORD, 1, 'foo'),
-                    array(Tokenizer::T_WILDCARD_MULTI, 1, '*'),
-                    array(Tokenizer::T_WORD, 1, 'bar')
-                )
-            ),
-            array(
+                [
+                    [Tokenizer::T_WORD, 1, 'foo'],
+                    [Tokenizer::T_WILDCARD_MULTI, 1, '*'],
+                    [Tokenizer::T_WORD, 1, 'bar']
+                ]
+            ],
+            [
                 'fo?',
-                array(
-                    array(Tokenizer::T_WORD, 1, 'fo'),
-                    array(Tokenizer::T_WILDCARD_SINGLE, 1, '?')
-                )
-            ),
-            array(
+                [
+                    [Tokenizer::T_WORD, 1, 'fo'],
+                    [Tokenizer::T_WILDCARD_SINGLE, 1, '?']
+                ]
+            ],
+            [
                 '[a-z]',
-                array(
-                    array(Tokenizer::T_GROUP_BEGIN, 1, '['),
-                    array(Tokenizer::T_GROUP_RANGE, 1, 'a-z'),
-                    array(Tokenizer::T_GROUP_END, 1, ']')
-                )
-            ),
-            array(
+                [
+                    [Tokenizer::T_GROUP_BEGIN, 1, '['],
+                    [Tokenizer::T_GROUP_RANGE, 1, 'a-z'],
+                    [Tokenizer::T_GROUP_END, 1, ']']
+                ]
+            ],
+            [
                 '[!a-z]',
-                array(
-                    array(Tokenizer::T_GROUP_BEGIN_NEGATED, 1, '[!'),
-                    array(Tokenizer::T_GROUP_RANGE, 1, 'a-z'),
-                    array(Tokenizer::T_GROUP_END, 1, ']')
-                )
-            ),
-            array(
+                [
+                    [Tokenizer::T_GROUP_BEGIN_NEGATED, 1, '[!'],
+                    [Tokenizer::T_GROUP_RANGE, 1, 'a-z'],
+                    [Tokenizer::T_GROUP_END, 1, ']']
+                ]
+            ],
+            [
                 '[^a]',
-                array(
-                    array(Tokenizer::T_GROUP_BEGIN_NEGATED, 1, '[^'),
-                    array(Tokenizer::T_GROUP_CHARACTER, 1, 'a'),
-                    array(Tokenizer::T_GROUP_END, 1, ']')
-                )
-            ),
-            array(
+                [
+                    [Tokenizer::T_GROUP_BEGIN_NEGATED, 1, '[^'],
+                    [Tokenizer::T_GROUP_CHARACTER, 1, 'a'],
+                    [Tokenizer::T_GROUP_END, 1, ']']
+                ]
+            ],
+            [
                 '[ab]',
-                array(
-                    array(Tokenizer::T_GROUP_BEGIN, 1, '['),
-                    array(Tokenizer::T_GROUP_CHARACTER, 1, 'a'),
-                    array(Tokenizer::T_GROUP_CHARACTER, 1, 'b'),
-                    array(Tokenizer::T_GROUP_END, 1, ']')
-                )
-            ),
-            array(
+                [
+                    [Tokenizer::T_GROUP_BEGIN, 1, '['],
+                    [Tokenizer::T_GROUP_CHARACTER, 1, 'a'],
+                    [Tokenizer::T_GROUP_CHARACTER, 1, 'b'],
+                    [Tokenizer::T_GROUP_END, 1, ']']
+                ]
+            ],
+            [
                 '[[:alpha:]]',
-                array(
-                    array(Tokenizer::T_GROUP_BEGIN, 1, '['),
-                    array(Tokenizer::T_GROUP_CHARACTER_CLASS, 1, '[:alpha:]'),
-                    array(Tokenizer::T_GROUP_END, 1, ']')
-                )
-            ),
-            array(
+                [
+                    [Tokenizer::T_GROUP_BEGIN, 1, '['],
+                    [Tokenizer::T_GROUP_CHARACTER_CLASS, 1, '[:alpha:]'],
+                    [Tokenizer::T_GROUP_END, 1, ']']
+                ]
+            ],
+            [
                 '[]]',
-                array(
-                    array(Tokenizer::T_GROUP_BEGIN, 1, '['),
-                    array(Tokenizer::T_GROUP_CHARACTER, 1, ']'),
-                    array(Tokenizer::T_GROUP_END, 1, ']')
-                )
-            ),
-            array(
+                [
+                    [Tokenizer::T_GROUP_BEGIN, 1, '['],
+                    [Tokenizer::T_GROUP_CHARACTER, 1, ']'],
+                    [Tokenizer::T_GROUP_END, 1, ']']
+                ]
+            ],
+            [
                 '[]-_]',
-                array(
-                    array(Tokenizer::T_GROUP_BEGIN, 1, '['),
-                    array(Tokenizer::T_GROUP_RANGE, 1, ']-_'),
-                    array(Tokenizer::T_GROUP_END, 1, ']')
-                )
-            ),
-            array(
+                [
+                    [Tokenizer::T_GROUP_BEGIN, 1, '['],
+                    [Tokenizer::T_GROUP_RANGE, 1, ']-_'],
+                    [Tokenizer::T_GROUP_END, 1, ']']
+                ]
+            ],
+            [
                 '[][!]',
-                array(
-                    array(Tokenizer::T_GROUP_BEGIN, 1, '['),
-                    array(Tokenizer::T_GROUP_CHARACTER, 1, ']'),
-                    array(Tokenizer::T_GROUP_CHARACTER, 1, '['),
-                    array(Tokenizer::T_GROUP_CHARACTER, 1, '!'),
-                    array(Tokenizer::T_GROUP_END, 1, ']')
-                )
-            ),
-            array(
+                [
+                    [Tokenizer::T_GROUP_BEGIN, 1, '['],
+                    [Tokenizer::T_GROUP_CHARACTER, 1, ']'],
+                    [Tokenizer::T_GROUP_CHARACTER, 1, '['],
+                    [Tokenizer::T_GROUP_CHARACTER, 1, '!'],
+                    [Tokenizer::T_GROUP_END, 1, ']']
+                ]
+            ],
+            [
                 '[!]a-]',
-                array(
-                    array(Tokenizer::T_GROUP_BEGIN_NEGATED, 1, '[!'),
-                    array(Tokenizer::T_GROUP_CHARACTER, 1, ']'),
-                    array(Tokenizer::T_GROUP_CHARACTER, 1, 'a'),
-                    array(Tokenizer::T_GROUP_CHARACTER, 1, '-'),
-                    array(Tokenizer::T_GROUP_END, 1, ']')
-                )
-            ),
-            array(
+                [
+                    [Tokenizer::T_GROUP_BEGIN_NEGATED, 1, '[!'],
+                    [Tokenizer::T_GROUP_CHARACTER, 1, ']'],
+                    [Tokenizer::T_GROUP_CHARACTER, 1, 'a'],
+                    [Tokenizer::T_GROUP_CHARACTER, 1, '-'],
+                    [Tokenizer::T_GROUP_END, 1, ']']
+                ]
+            ],
+            [
                 'fo*[ob][!y][[:alpha:]]?*',
-                array(
-                    array(Tokenizer::T_WORD, 1, 'fo'),
-                    array(Tokenizer::T_WILDCARD_MULTI, 1, '*'),
-                    array(Tokenizer::T_GROUP_BEGIN, 1, '['),
-                    array(Tokenizer::T_GROUP_CHARACTER, 1, 'o'),
-                    array(Tokenizer::T_GROUP_CHARACTER, 1, 'b'),
-                    array(Tokenizer::T_GROUP_END, 1, ']'),
-                    array(Tokenizer::T_GROUP_BEGIN_NEGATED, 1, '[!'),
-                    array(Tokenizer::T_GROUP_CHARACTER, 1, 'y'),
-                    array(Tokenizer::T_GROUP_END, 1, ']'),
-                    array(Tokenizer::T_GROUP_BEGIN, 1, '['),
-                    array(Tokenizer::T_GROUP_CHARACTER_CLASS, 1, '[:alpha:]'),
-                    array(Tokenizer::T_GROUP_END, 1, ']'),
-                    array(Tokenizer::T_WILDCARD_SINGLE, 1, '?'),
-                    array(Tokenizer::T_WILDCARD_MULTI, 1, '*')
-                )
-            ),
-            array(
+                [
+                    [Tokenizer::T_WORD, 1, 'fo'],
+                    [Tokenizer::T_WILDCARD_MULTI, 1, '*'],
+                    [Tokenizer::T_GROUP_BEGIN, 1, '['],
+                    [Tokenizer::T_GROUP_CHARACTER, 1, 'o'],
+                    [Tokenizer::T_GROUP_CHARACTER, 1, 'b'],
+                    [Tokenizer::T_GROUP_END, 1, ']'],
+                    [Tokenizer::T_GROUP_BEGIN_NEGATED, 1, '[!'],
+                    [Tokenizer::T_GROUP_CHARACTER, 1, 'y'],
+                    [Tokenizer::T_GROUP_END, 1, ']'],
+                    [Tokenizer::T_GROUP_BEGIN, 1, '['],
+                    [Tokenizer::T_GROUP_CHARACTER_CLASS, 1, '[:alpha:]'],
+                    [Tokenizer::T_GROUP_END, 1, ']'],
+                    [Tokenizer::T_WILDCARD_SINGLE, 1, '?'],
+                    [Tokenizer::T_WILDCARD_MULTI, 1, '*']
+                ]
+            ],
+            [
                 '\*foo',
-                array(
-                    array(Tokenizer::T_WORD, 1, '\*foo')
-                )
-            ),
-            array(
+                [
+                    [Tokenizer::T_WORD, 1, '\*foo']
+                ]
+            ],
+            [
                 'foo\*',
-                array(
-                    array(Tokenizer::T_WORD, 1, 'foo\*')
-                )
-            ),
-            array(
+                [
+                    [Tokenizer::T_WORD, 1, 'foo\*']
+                ]
+            ],
+            [
                 '\*foo\*',
-                array(
-                    array(Tokenizer::T_WORD, 1, '\*foo\*')
-                )
-            ),
-            array(
+                [
+                    [Tokenizer::T_WORD, 1, '\*foo\*']
+                ]
+            ],
+            [
                 '\*',
-                array(
-                    array(Tokenizer::T_WORD, 1, '\*')
-                )
-            )
-        );
+                [
+                    [Tokenizer::T_WORD, 1, '\*']
+                ]
+            ]
+        ];
     }
 
     /**

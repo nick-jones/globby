@@ -12,7 +12,7 @@
     "license": "MIT",
 
     "require": {
-        "php": ">=5.3",
+        "php": ">=5.5",
         "nikic/phlexy": "~1.0@dev"
     },
 
