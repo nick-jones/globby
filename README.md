@@ -45,34 +45,9 @@ step on every relevant request (this is assuming the patterns are reasonably fix
 
 ## Installation
 
-You can install Globby via [composer](http://getcomposer.org). Composer sets a `minimum-stability` of "stable" by
-default, which is a slight issue for requiring Globby, as it relies on [Phlexy](https://github.com/nikic/Phlexy), which
-currently has no stable releases. Here are a couple of composer.json configurations that will allow you to require
-Globby without issue:
+You can install Globby via [composer](http://getcomposer.org):
 
-Explicitly require Phlexy with dev stability:
-
-```json
-{
-    "require": {
-        "nick-jones/globby": "~0.2",
-        "nikic/phlexy": "@dev"
-    }
-}
-```
-
-Or lower `minimum-stability`, but `prefer-stable`:
-
-```json
-{
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-
-    "require": {
-        "nick-jones/globby": "~0.2"
-    }
-}
-```
+`composer require nick-jones/globby`
 
 ## Usage
 
