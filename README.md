@@ -1,6 +1,6 @@
 # Globby
 
-[![Build Status](https://travis-ci.org/nick-jones/Globby.svg?branch=master)](https://travis-ci.org/nick-jones/Globby) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nick-jones/Globby/badges/quality-score.png?s=fa89b9575c50a9e334a5894b425bdc12c85fa454)](https://scrutinizer-ci.com/g/nick-jones/Globby/) [![Code Coverage](https://scrutinizer-ci.com/g/nick-jones/Globby/badges/coverage.png?s=209893a51f5aa1747eb24265d796405e8f48903d)](https://scrutinizer-ci.com/g/nick-jones/Globby/) [![HHVM Status](http://hhvm.h4cc.de/badge/nick-jones/globby.svg)](http://hhvm.h4cc.de/package/nick-jones/globby)
+[![Build Status](https://travis-ci.org/nick-jones/globby.svg?branch=master)](https://travis-ci.org/nick-jones/globby) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nick-jones/Globby/badges/quality-score.png?s=fa89b9575c50a9e334a5894b425bdc12c85fa454)](https://scrutinizer-ci.com/g/nick-jones/Globby/) [![Code Coverage](https://scrutinizer-ci.com/g/nick-jones/Globby/badges/coverage.png?s=209893a51f5aa1747eb24265d796405e8f48903d)](https://scrutinizer-ci.com/g/nick-jones/Globby/) [![HHVM Status](http://hhvm.h4cc.de/badge/nick-jones/globby.svg)](http://hhvm.h4cc.de/package/nick-jones/globby)
 
 Globby is a glob wildcard → regular expression translation library.
 
